@@ -1,5 +1,8 @@
 pila = []
-token = ["id", "+" , "id","$"]
+token = ["id", "+" , "id","*","$"]
+terminales = ["id", "+","*"]
+noTerminales = ["E", "E'", "T", "T'", "F"]
+inicial = "E"
 matriz = {
     "E": {
         "id" : "TE'" ,
@@ -35,7 +38,19 @@ U -> *FU | eps
 F -> (E) | id
 
 """
+def isTerminal(simbolo):
+    if(simbolo in terminales):
+        return true
+    else:
+        return false
 
+def getSimbolos(regla):
+    simbolos = []
+    for i in regla:
+        if(isTerminal(i)):
+            simbolos.append(i);
+        else:
+            if()
 
 ########################
 
@@ -46,10 +61,9 @@ F -> (E) | id
 #lista[::-1]    ->  invierte la lista
 #''.join(list)  ->  convierte la lista en un solo string
 
-pila += "$"
-pila += "E"
 
-coincidencia = ''
+pila += "$"+ inicial            #inicializar la pila
+coincidencia = ''               #incializar coincidencias
 
 
 while( pila[-1] != '$'):
@@ -65,11 +79,10 @@ while( pila[-1] != '$'):
 
     print("\t\t", end = "")
 
-    top = pila.pop()                            #se obtiene el primero de la pila
-    if(pila[-1] == "'"):
-        top+=pila.pop()                         #si el que sigue es ' entonces se hace otro pop para sacar la regla completa  E'$  -> $
+    top = pila.pop()                           #se obtiene el primero de la pila
 
     nextToken = token[0]                        #se obtiene el token del principio
+
 
     if(top == nextToken):
         token.pop(0)
