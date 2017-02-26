@@ -66,12 +66,13 @@ while( pila[-1] != '$'):
     print("\t\t", end = "")
 
     top = pila.pop()                            #se obtiene el primero de la pila
-    if(pila.peek() = "'"): top+=pila.pop()      #si el que sigue es ' entonces se hace otro pop para sacar la regla completa
+    if(pila[-1] == "'"):
+        top+=pila.pop()                         #si el que sigue es ' entonces se hace otro pop para sacar la regla completa  E'$  -> $
 
-    nextToken = token[0]                       #se obtiene el token del principio
+    nextToken = token[0]                        #se obtiene el token del principio
 
     if(top == nextToken):
-        token.pop(index)
+        token.pop(0)
         coincidencia += nextToken
         print('Coincidencia ' + nextToken)
 
@@ -79,7 +80,7 @@ while( pila[-1] != '$'):
         print('Error')
 
     elif (matriz[top][nextToken] != '#'):
-            pila += (matriz[top][nextToken])
+            pila += (matriz[top][nextToken])[::-1]
             print('Salida ' + top + ' ->' + matriz[top][nextToken])
 
     elif (matriz[top][nextToken] == '#'):
