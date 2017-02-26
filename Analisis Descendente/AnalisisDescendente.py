@@ -1,5 +1,5 @@
 pila = []
-token = ["id", "+" , "id","*","$"]
+token = ["id", "+" , "id","*","id","$"]
 terminales = ["id", "+","*"]
 noTerminales = ["E", "E'", "T", "T'", "F"]
 inicial = "E"
@@ -10,7 +10,7 @@ matriz = {
         "("  : "TE'"
     },
     "E//'": {
-        "+"  : "TE'",
+        "+"  : "+TE'",
         ")"  : "#",
         "$"  : "#"
     },
@@ -59,7 +59,7 @@ def insertRule(top, nextToken):
             singleQuote = True
             pila.pop()
         elif singleQuote:
-            value = pila.pop() + "'"
+            value = pila.pop() + "//'"
             pila.append(value)
             singleQuote = False
 
@@ -73,7 +73,8 @@ def insertRule(top, nextToken):
 
 pila += "$"+ inicial            #inicializar la pila
 coincidencia = ''               #incializar coincidencias
-
+#T -> +
+print()
 
 while( pila[-1] != '$'):
     print(coincidencia, end = " \t\t")
@@ -88,7 +89,7 @@ while( pila[-1] != '$'):
 
     print("\t\t", end = "")
 
-    top = pila.pop()                           #se obtiene el primero de la pila
+    top = pila.pop()                            #se obtiene el primero de la pila
     nextToken = token[0]                        #se obtiene el token del principio
 
     if(top == nextToken):
@@ -96,14 +97,15 @@ while( pila[-1] != '$'):
         coincidencia += nextToken
         print('Coincidencia ' + nextToken)
 
-    ##elif (not(nextToken in matriz[top])):
-        ##print('Error')
+    elif (not(nextToken in matriz[top])):
+        print('Error')
 
-    elif (matriz[top][nextToken] != '#'):
+    elif (matriz[top][nextToken] != "#"):
             insertRule(top,nextToken)
             print('Salida ' + top + ' ->' + matriz[top][nextToken])
 
-    elif (matriz[top][nextToken] == '#'):
+    elif (matriz[top][nextToken] == "#"):
+            print("Nada")
             continue
 
     else:
