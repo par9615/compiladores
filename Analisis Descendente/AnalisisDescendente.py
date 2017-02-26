@@ -3,12 +3,13 @@ token = ["id", "+" , "id","*","$"]
 terminales = ["id", "+","*"]
 noTerminales = ["E", "E'", "T", "T'", "F"]
 inicial = "E"
+
 matriz = {
     "E": {
         "id" : "TE'" ,
         "("  : "TE'"
     },
-    "E'": {
+    "E//'": {
         "+"  : "TE'",
         ")"  : "#",
         "$"  : "#"
@@ -17,7 +18,7 @@ matriz = {
         "id" : "FT'",
         "("  : "FT'"
     },
-    "T'" : {
+    "T//'" : {
         "+"  : "#",
         "*"  : "*FT'",
         ")"  : "#",
@@ -40,21 +41,29 @@ F -> (E) | id
 """
 def isTerminal(simbolo):
     if(simbolo in terminales):
-        return true
+        return True
     else:
-        return false
+        return False
 
-def getSimbolos(regla):
-    simbolos = []
-    for i in regla:
-        if(isTerminal(i)):
-            simbolos.append(i);
-        else:
-            if()
+def insertRule(top, nextToken):
+    global pila
+    global matriz
+    rule = (matriz[top][nextToken])[::-1]
+    singleQuote = False
+    if rule == 'di':
+        pila.append('id')
+        return
+    for c in rule:
+        pila += c
+        if c == "'":
+            singleQuote = True
+            pila.pop()
+        elif singleQuote:
+            value = pila.pop() + "'"
+            pila.append(value)
+            singleQuote = False
 
 ########################
-
-
 #analisis sintactico
 
 
@@ -69,7 +78,7 @@ coincidencia = ''               #incializar coincidencias
 while( pila[-1] != '$'):
     print(coincidencia, end = " \t\t")
 
-    for i in pila:
+    for i in reversed(pila):
         print(i, end = "")
 
     print("\t\t", end = "")
@@ -80,20 +89,18 @@ while( pila[-1] != '$'):
     print("\t\t", end = "")
 
     top = pila.pop()                           #se obtiene el primero de la pila
-
     nextToken = token[0]                        #se obtiene el token del principio
-
 
     if(top == nextToken):
         token.pop(0)
         coincidencia += nextToken
         print('Coincidencia ' + nextToken)
 
-    elif (not (nextToken in matriz[top])):
-        print('Error')
+    ##elif (not(nextToken in matriz[top])):
+        ##print('Error')
 
     elif (matriz[top][nextToken] != '#'):
-            pila += (matriz[top][nextToken])[::-1]
+            insertRule(top,nextToken)
             print('Salida ' + top + ' ->' + matriz[top][nextToken])
 
     elif (matriz[top][nextToken] == '#'):
@@ -102,18 +109,4 @@ while( pila[-1] != '$'):
     else:
         print('Error')
 
-
-class Stack(object):
-
-    def __init__(self):
-        self.storage = []
-
-    def isEmpty(self):
-        return len(self.storage) == 0
-
-    def push(self,p):
-        self.storage[:0] = p
-
-    def pop(self):
-        """issue: throw exception?"""
-        return None
+    #print (pila)
