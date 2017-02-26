@@ -1,5 +1,5 @@
 pila = []
-token = ["id", "+" , "id"]
+token = ["id", "+" , "id","$"]
 matriz = {
     "E": {
         "id" : "TE'" ,
@@ -42,51 +42,51 @@ F -> (E) | id
 
 #analisis sintactico
 
+
+#lista[::-1]    ->  invierte la lista
+#''.join(list)  ->  convierte la lista en un solo string
+
 pila += "$"
 pila += "E"
 
 coincidencia = ''
 
-"""
-$          id+id$
-TE'$
-matriz[E][id]
-"""
 
-def predAnalysis(token):
-    while( pila[-1] != '$'):
-        print(coincidencia, end = " \t\t")
+while( pila[-1] != '$'):
+    print(coincidencia, end = " \t\t")
 
-        for i in pila:
-            print(i, end = "")
+    for i in pila:
+        print(i, end = "")
 
-        print("\t\t", end = "")
+    print("\t\t", end = "")
 
-        for i in token:
-            print(i, end = "")
+    for i in token:
+        print(i, end = "")
 
-        print("\t\t", end = "")
+    print("\t\t", end = "")
 
-        top = pila.pop()
-        nextToken = token[-1]
+    top = pila.pop()                            #se obtiene el primero de la pila
+    if(pila.peek() = "'"): top+=pila.pop()      #si el que sigue es ' entonces se hace otro pop para sacar la regla completa
 
-        if(top == nextToken):
-            token.pop()
-            coincidencia += nextToken
-            print('Coincidencia ' + nextToken)
+    nextToken = token[0]                       #se obtiene el token del principio
 
-        elif (not (nextToken in matriz[top])):
-            print('Error')
+    if(top == nextToken):
+        token.pop(index)
+        coincidencia += nextToken
+        print('Coincidencia ' + nextToken)
 
-        elif (matriz[top][nextToken] != '#'):
-                pila += (matriz[top][nextToken])
-                print('Salida ' + top + ' ->' + matriz[top][nextToken])
+    elif (not (nextToken in matriz[top])):
+        print('Error')
 
-        elif (matriz[top][nextToken] == '#'):
-                continue
+    elif (matriz[top][nextToken] != '#'):
+            pila += (matriz[top][nextToken])
+            print('Salida ' + top + ' ->' + matriz[top][nextToken])
 
-        else:
-            print('Error')
+    elif (matriz[top][nextToken] == '#'):
+            continue
+
+    else:
+        print('Error')
 
 
 class Stack(object):
@@ -103,10 +103,3 @@ class Stack(object):
     def pop(self):
         """issue: throw exception?"""
         return None
-
-
- $E              id+id           Salida E ->TE'
-                 $TE'            id+id           Traceback (most recent call last):
-  File "C:\Users\simio\Desktop\IDE´s Projects\Python\AnalisisDescendente.py", line 78, in <module>
-    elif (not (nextToken in matriz[top])):
-KeyError: "'"
