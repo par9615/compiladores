@@ -7,15 +7,15 @@ inicial = "E"
 matriz = {
     "E": {
         "id" : "TX" ,
-        "("  : "TE'"
+        "("  : "TX"
     },
     "T": {
         "("  : "(E)",
-        "id"  : "idY"
+        "id"  : "id"
     },
     "X": {
         ")" : "#",
-        "+"  : "+E'",
+        "+"  : "+E",
         "$"  : "#"
     },
     "Y" : {
@@ -24,7 +24,6 @@ matriz = {
         "*"  : "*E",
         "$"  : "#"
         }
-
 }
 
 
@@ -104,7 +103,7 @@ while(len(pila)):
         output.append('Coincidencia ' + nextToken)
         #print('Coincidencia ' + nextToken)
 
-    elif (nextToken in matriz[top].keys()):
+    elif (top != '$' and nextToken in matriz[top].keys()):
         if (matriz[top][nextToken] != "#"):
             insertRule(top,nextToken)
             output.append('Salida ' + top.replace('/', '') + ' ->' + matriz[top][nextToken])
