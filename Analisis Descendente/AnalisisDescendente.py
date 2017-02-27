@@ -1,5 +1,5 @@
 pila = []
-token = ["(", "id", "+", ")","id", ")","$"]
+token = ["(", "id", "+", "id" , ")","$"]
 terminales = ["id", "+","*"]
 noTerminales = ["E", "E'", "T", "T'", "F"]
 inicial = "E"
@@ -77,7 +77,7 @@ coincidencia = ''               #incializar coincidencias
 
 output = []
 
-while( pila[-1] != '$'):
+while(len(pila)):
     #print(coincidencia, end = " \t\t")      #imprime coincidencia
     output.append(coincidencia)
 
@@ -121,6 +121,9 @@ while( pila[-1] != '$'):
         #print('Error')
         break
 
+    if('$' in output[3]):
+        output[3] = 'Acceptado'
+        
     print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
     del output[:]
     #print (pila)
