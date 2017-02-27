@@ -1,5 +1,5 @@
 pila = []
-token = ["(","id", "+" ,"id",")","$"]
+token = ["(", "id", "+", ")","id", ")","$"]
 terminales = ["id", "+","*"]
 noTerminales = ["E", "E'", "T", "T'", "F"]
 inicial = "E"
@@ -74,23 +74,27 @@ def insertRule(top, nextToken):
 pila += "$"+ inicial            #inicializar la pila
 coincidencia = ''               #incializar coincidencias
 
-print()
+
+output = []
 
 while( pila[-1] != '$'):
-    print(coincidencia, end = " \t\t")      #imprime coincidencia
+    #print(coincidencia, end = " \t\t")      #imprime coincidencia
+    output.append(coincidencia)
 
-    for i in reversed(pila):                #imprime pila
-        for j in i:
-            if(j != "/"):
-                print(j, end = "")
+    output.append("".join(reversed(pila)).replace('/', ''))
+    #for i in reversed(pila):                #imprime pila
+    #    for j in i:
+    #        if(j != "/"):
+    #            print(j, end = "")
 
 
-    print("\t\t", end = "")
+    #print("\t\t", end = "")
 
-    for i in token:                         #imprime tokens de entrada
-        print(i, end = "")
+    output.append("".join(token))
+    #for i in token:                         #imprime tokens de entrada
+        #print(i, end = "")
 
-    print("\t\t", end = "")
+    #print("\t\t", end = "")
 
     top = pila.pop()                            #se obtiene el primero de la pila
     nextToken = token[0]                        #se obtiene el token del principio
@@ -98,19 +102,25 @@ while( pila[-1] != '$'):
     if(top == nextToken):
         token.pop(0)
         coincidencia += nextToken
-        print('Coincidencia ' + nextToken)
+        output.append('Coincidencia ' + nextToken)
+        #print('Coincidencia ' + nextToken)
 
     elif (nextToken in matriz[top].keys()):
         if (matriz[top][nextToken] != "#"):
             insertRule(top,nextToken)
-            print('Salida ' + top + ' ->' + matriz[top][nextToken])
+            output.append('Salida ' + top.replace('/', '') + ' ->' + matriz[top][nextToken])
+            #print('Salida ' + top + ' ->' + matriz[top][nextToken])
 
         else:
-            print("Nada")
-            continue
+            output.append('Nada')
+            #print("Nada")
 
     else:
-        print('Error')
+        output.append('Error')
+        print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
+        #print('Error')
         break
 
+    print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
+    del output[:]
     #print (pila)
