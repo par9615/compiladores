@@ -77,6 +77,8 @@ coincidencia = ''               #incializar coincidencias
 
 output = []
 
+print("{:>12}\t{:>12}\t{:>12}\t{:<12}\n".format("Coincidencia", "Pila", "Entrada", "Accion"))
+
 while(len(pila)):
     #print(coincidencia, end = " \t\t")      #imprime coincidencia
     output.append(coincidencia)
@@ -123,7 +125,7 @@ while(len(pila)):
 
     if('$' in output[3]):
         output[3] = 'Acceptado'
-        
+
     print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
     del output[:]
     #print (pila)
