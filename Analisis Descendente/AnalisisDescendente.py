@@ -1,33 +1,30 @@
 pila = []
-token = ["(", "id", "+", "id" , ")","$"]
-terminales = ["id", "+","*"]
-noTerminales = ["E", "E'", "T", "T'", "F"]
+token = ["id","+","(","+","id","$"]
+terminales = ["id", "+","*","(",")"]
+noTerminales = ["E","T","X","Y"]
 inicial = "E"
 
 matriz = {
     "E": {
-        "id" : "TE'" ,
+        "id" : "TX" ,
         "("  : "TE'"
     },
-    "E//'": {
-        "+"  : "+TE'",
-        ")"  : "#",
-        "$"  : "#"
-    },
     "T": {
-        "id" : "FT'",
-        "("  : "FT'"
+        "("  : "(E)",
+        "id"  : "idY"
     },
-    "T//'" : {
-        "+"  : "#",
-        "*"  : "*FT'",
-        ")"  : "#",
+    "X": {
+        ")" : "#",
+        "+"  : "+E'",
         "$"  : "#"
-        },
-    "F" : {
-        "id" : "id",
-        "("  : "(E)"
-    }
+    },
+    "Y" : {
+        ")"  : "#",
+        "+"  : "#",
+        "*"  : "*E",
+        "$"  : "#"
+        }
+
 }
 
 
@@ -124,7 +121,7 @@ while(len(pila)):
         break
 
     if('$' in output[3]):
-        output[3] = 'Acceptado'
+        output[3] = 'Aceptado'
 
     print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
     del output[:]
