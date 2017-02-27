@@ -1,28 +1,28 @@
-pila = []
-token = ["id","+","(","+","id","$"]
-terminales = ["id", "+","*","(",")"]
-noTerminales = ["E","T","X","Y"]
-inicial = "E"
+stack = []
+tokens = ["int","*","(","int","+","int",")",")","$"]
+terminals = ["int", "+","*","(",")"]
+nonTerminals = ["E","T","X","Y"]
+initial = "E"
 
-matriz = {
+matrix = {
     "E": {
-        "id" : "TX" ,
-        "("  : "TX"
+        "int" : ["T","X"] ,
+        "("  : ["T","X"]
     },
     "T": {
-        "("  : "(E)",
-        "id"  : "id"
+        "("  : ["(","E",")"],
+        "int"  : ["int", "Y"]
     },
     "X": {
-        ")" : "#",
-        "+"  : "+E",
-        "$"  : "#"
+        ")" : ["#"],
+        "+"  : ["+","E"],
+        "$"  : ["#"]
     },
     "Y" : {
-        ")"  : "#",
-        "+"  : "#",
-        "*"  : "*E",
-        "$"  : "#"
+        ")"  : ["#"],
+        "+"  : ["#"],
+        "*"  : ["*","E"],
+        "$"  : ["#"]
         }
 }
 
@@ -35,93 +35,65 @@ U -> *FU | eps
 F -> (E) | id
 
 """
-def isTerminal(simbolo):
-    if(simbolo in terminales):
+def isTerminal(symbol):
+    if(symbol in terminals):
         return True
     else:
         return False
 
-def insertRule(top, nextToken):
-    global pila
-    global matriz
-    rule = (matriz[top][nextToken])[::-1]
-    singleQuote = False
-    if rule == 'di':
-        pila.append('id')
-        return
-    for c in rule:
-        pila += c
-        if c == "'":
-            singleQuote = True
-            pila.pop()
-        elif singleQuote:
-            value = pila.pop() + "//'"
-            pila.append(value)
-            singleQuote = False
+def insertRule(top, token):
+    global stack
+    global matrix 
+    reversedRule = reversed(matrix[top][token])
+    for value in reversedRule:
+        stack.append(value)
+
 
 ########################
-#analisis sintactico
 
 
-#lista[::-1]    ->  invierte la lista
-#''.join(list)  ->  convierte la lista en un solo string
+stack.append("$")
+stack.append("E")            #inicializar la stack
+coincidence = ''               #incializar coincidencias
 
 
-pila += "$"+ inicial            #inicializar la pila
-coincidencia = ''               #incializar coincidencias
+output = ["", "", "", ""]
 
+print("{:>12}\t{:>12}\t{:>12}\t{:<12}\n".format("Coincidencia", "stack", "Entrada", "Accion"))
 
-output = []
+del output[:]
 
-print("{:>12}\t{:>12}\t{:>12}\t{:<12}\n".format("Coincidencia", "Pila", "Entrada", "Accion"))
+while(len(stack)):
+    output.append(coincidence)
 
-while(len(pila)):
-    #print(coincidencia, end = " \t\t")      #imprime coincidencia
-    output.append(coincidencia)
+    output.append("".join(reversed(stack)))
 
-    output.append("".join(reversed(pila)).replace('/', ''))
-    #for i in reversed(pila):                #imprime pila
-    #    for j in i:
-    #        if(j != "/"):
-    #            print(j, end = "")
+    output.append("".join(tokens))
 
+    top = stack.pop()                            #se obtiene el primero de la stack
+    token = tokens[0]                        #se obtiene el token del principio
 
-    #print("\t\t", end = "")
+    if(top == token):
+        tokens.pop(0)
+        coincidence += token
+        output.append("Coincidencia " + token)
 
-    output.append("".join(token))
-    #for i in token:                         #imprime tokens de entrada
-        #print(i, end = "")
+    elif(top == '$'):
+        output.append("Error")
 
-    #print("\t\t", end = "")
-
-    top = pila.pop()                            #se obtiene el primero de la pila
-    nextToken = token[0]                        #se obtiene el token del principio
-
-    if(top == nextToken):
-        token.pop(0)
-        coincidencia += nextToken
-        output.append('Coincidencia ' + nextToken)
-        #print('Coincidencia ' + nextToken)
-
-    elif (top != '$' and nextToken in matriz[top].keys()):
-        if (matriz[top][nextToken] != "#"):
-            insertRule(top,nextToken)
-            output.append('Salida ' + top.replace('/', '') + ' ->' + matriz[top][nextToken])
-            #print('Salida ' + top + ' ->' + matriz[top][nextToken])
-
+    elif(token in matrix[top]):
+        if ("#" in matrix[top][token]):
+            output.append("Salida " + top + " -> #")
         else:
-            output.append('Nada')
-            #print("Nada")
+            insertRule(top, token)
+            output.append("Salida " + top + " -> " + "".join(matrix[top][token]))
 
     else:
-        output.append('Error')
-        print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
-        #print('Error')
-        break
-
-    if('$' in output[3]):
-        output[3] = 'Aceptado'
+        output.append("Error")
 
     print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
+    if (output[3] == "Error"): break
     del output[:]
-    #print (pila)
+
+    if (len(stack) == 0):
+        print("Aceptado")
