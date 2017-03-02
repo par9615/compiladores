@@ -1,6 +1,6 @@
 stack = []
 tokens = []
-
+symbols = []
 terminals = []
 nonTerminals = []
 initial = 0
@@ -113,3 +113,41 @@ def shift(top, token):
 
 def reduce(top, token):
     global stack
+
+
+def action(top, token):
+    action = matrix[top][token]
+    return action[0]
+
+def pushNextState(top, token):
+    global stack
+    state = matrix[top][token]
+    state.pop(0)
+    stack.append(state)
+
+
+
+####################################
+# TODO: Reduce
+# TODO: check errors
+
+stack.append(initial)
+token = tokens.pop(0)
+
+while(1):
+    top = stack.pop()
+
+    if(token in matrix[top]):
+        if(action(top, token) == "S"): #Shift
+            pushNextState(top,token)
+            symbols.append(token)
+            token = tokens.pop(0)
+
+        elif(action(top, token) == "R"): #Reduce
+            for i in range(0, len())
+
+        elif(action(top, token) == "A"): #Aceptado
+
+        else:
+
+    else:
