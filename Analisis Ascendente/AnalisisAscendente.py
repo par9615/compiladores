@@ -1,5 +1,5 @@
 stack = []
-tokens = []
+tokens = ["id","*","id","+","id","$"]
 symbols = []
 terminals = []
 nonTerminals = []
@@ -89,65 +89,73 @@ matrix = {
     }
 }
 
-gramatic = {
-    "E": {
-        1:  ["E", "+", "T"],
-        2:  ["T"]
-    },
-
-    "T": {
-        3: ["T", "*", "F"],
-        4: ["F"]
-    },
-
-    "F": {
-        5: ["(", "E", ")"],
-        6: ["id"]
-    }
+grammar = {
+        1: ("E", ["E", "+", "T"]),
+        2:  ("E",["T"]),
+        3: ("T",["T", "*", "F"]),
+        4: ("T", ["F"]),
+        5: ("F", ["(", "E", ")"]),
+        6: ("F",["id"])
 }
 
+def pushNextState(top, token):  #Hace un push en la pila del estado en matrix[top][token] -> "S5" hace stack.append(5)
+    global stack
+    state = getState(top,token)
+    stack.append(state)
 
-def shift(top, token):
+def shift(top, token):   #No hace nada
     global stack
 
 
-def reduce(top, token):
+def reduce(top, token): #Hace todo el procedimiento del reduce
     global stack
+    global symbols
+
+    rule  = grammar[getState(top,token)][1]
+    head = grammar[getState(top,token)][0]
+
+    for i in range(0, len(rule)):
+        stack.pop()
+        symbols.pop()
+
+    pushNextState(stack[-1], head)
+    symbols.append(head)
 
 
-def action(top, token):
+def action(top, token):             #Retorna la acción en matrix[top][token] -> "S5" return "S"
     action = matrix[top][token]
     return action[0]
 
-def pushNextState(top, token):
-    global stack
-    state = matrix[top][token]
-    state.pop(0)
-    stack.append(state)
+def getState(top, token):           #Retorna el estado en matrix[top][token] -> "S5" return int(5)
+    return int(matrix[top][token][1:])
+
+
 
 
 
 ####################################
-# TODO: Reduce
-# TODO: check errors
 
 stack.append(initial)
 token = tokens.pop(0)
 
 while(1):
-    top = stack.pop()
+    top = stack[-1]
 
     if(token in matrix[top]):
-        if(action(top, token) == "S"): #Shift
+        act = action(top, token)
+
+        if(act == "S"): #Shift
             pushNextState(top,token)
             symbols.append(token)
             token = tokens.pop(0)
 
-        elif(action(top, token) == "R"): #Reduce
-            for i in range(0, len())
+        elif(act == "R"): #Reduce
+            reduce(top,token)
 
-        elif(action(top, token) == "A"): #Aceptado
-
-        else:
+        elif(act == "A"):
+            print ("SIMON")
+            break
 
     else:
+        print ("NELSON")
+        break
