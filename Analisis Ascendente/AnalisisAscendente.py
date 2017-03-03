@@ -139,6 +139,8 @@ stack.append(initial)
 token = tokens.pop(0)
 
 while(1):
+
+
     top = stack[-1]
 
     if(token in matrix[top]):
@@ -152,9 +154,12 @@ while(1):
         elif(act == "R"): #Reduce
             reduce(top,token)
 
-        elif(act == "A"):
+        elif(act == "A"): #Aceptado
             print ("SIMON")
-            break
+            break;
+
+        else:
+            print ("NELSON")
 
     else:
         print ("NELSON")
