@@ -1,7 +1,7 @@
 import re
 
 token_pattern = r"""
-(?P<termial>[a-z])
+(?P<terminal>[a-z])
 |(?P<nonTerminal>[A-Z])
 |(?P<identifier>[a-zA-Z_][a-zA-Z0-9_]*)
 |(?P<epsilon>[#])
@@ -34,7 +34,7 @@ def tokenize(text):
         raise TokenizerException('tokenizer stopped at pos %r of %r' % (
             pos, len(text)))
 
-stuff = r'A a b + - = 1'
+stuff = r'A id a b + - = 1'
 
 print(' stuff '.center(60, '='))
 for tok in tokenize(stuff):
