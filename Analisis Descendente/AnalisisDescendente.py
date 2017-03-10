@@ -43,7 +43,7 @@ def isTerminal(symbol):
 
 def insertRule(top, token):
     global stack
-    global matrix 
+    global matrix
     reversedRule = reversed(matrix[top][token])
     for value in reversedRule:
         stack.append(value)
@@ -79,20 +79,20 @@ while(len(stack)):
         output.append("Coincidencia " + token)
 
     elif(top == '$'):
-        output.append("Error")
+        output.append("Error") #Pila vacía -> meter inicial a la pila y hacer pop en tokens hasta que encuentre uno que este en su first
 
     elif(token in matrix[top]):
         if ("#" in matrix[top][token]):
             output.append("Salida " + top + " -> #")
-        else:
+        else: #Checar si es SYNC dentro de este else -> se omite el top
             insertRule(top, token)
             output.append("Salida " + top + " -> " + "".join(matrix[top][token]))
 
-    else:
-        output.append("Error")
+    else: #Aqui se revisa si el error fue M[top,token] o si top != token
+        output.append("Error") #Error M[top,token] en blanco -> se omite el simbolo token
 
     print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
-    if (output[3] == "Error"): break
+    if (output[3] == "Error"): break #Corregir esta parte o quitarla
     del output[:]
 
     if (len(stack) == 0):
