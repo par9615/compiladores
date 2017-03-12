@@ -1,28 +1,42 @@
 stack = []
-tokens = ["int","*","(","int","+","int",")",")","$"]
-terminals = ["int", "+","*","(",")"]
-nonTerminals = ["E","T","X","Y"]
+tokens = ["(","int","+","int",")","(", "int",")","$"]
+terminals = ["int", "+","*","(",")", "$"]
+nonTerminals = ["E","E'","T","T'", "F"]
 initial = "E"
+firstS = ["(", "int", "$"]
 
 matrix = {
     "E": {
-        "int" : ["T","X"] ,
-        "("  : ["T","X"]
+        "int" : ["T","E'"] ,
+        "("  : ["T","E'"],
+        ")"  : ["sync"],
+        "$"  : ["sync"]
+    },
+    "E'": {
+        "+"  : ["+","T","E'"],
+        ")"  : ["eps"],
+        "$"  : ["eps"]
     },
     "T": {
-        "("  : ["(","E",")"],
-        "int"  : ["int", "Y"]
+        "int" : ["F", "T'"],
+        "+"  : ["sync"],
+        "("  : ["F","T'"],
+        ")"  : ["sync"],
+        "$"  : ["sync"]
     },
-    "X": {
-        ")" : ["#"],
-        "+"  : ["+","E"],
-        "$"  : ["#"]
-    },
-    "Y" : {
-        ")"  : ["#"],
-        "+"  : ["#"],
-        "*"  : ["*","E"],
-        "$"  : ["#"]
+    "T'" : {
+        "+"  : ["eps"],
+        "*"  : ["*", "F", "T'"],
+        ")"  : ["eps"],
+        "$"  : ["eps"]
+        },
+    "F" : {
+        "int"  : ["int"],
+        "+"  : ["sync"],
+        "*"  : ["sync"],
+        "("  : ["(", "E", ")"],
+        ")"  : ["sync"],
+        "$"  : ["sync"]
         }
 }
 
@@ -33,7 +47,6 @@ E'-> +TE' | eps
 T -> FU
 U -> *FU | eps
 F -> (E) | id
-
 """
 def isTerminal(symbol):
     if(symbol in terminals):
@@ -59,7 +72,7 @@ coincidence = ''               #incializar coincidencias
 
 output = ["", "", "", ""]
 
-print("{:>12}\t{:>12}\t{:>12}\t{:<12}\n".format("Coincidencia", "stack", "Entrada", "Accion"))
+print("{:>16}\t{:>16}\t{:>16}\t{:<16}\n".format("Coincidencia", "stack", "Entrada", "Accion"))
 
 del output[:]
 
@@ -79,20 +92,34 @@ while(len(stack)):
         output.append("Coincidencia " + token)
 
     elif(top == '$'):
-        output.append("Error") #Pila vacía -> meter inicial a la pila y hacer pop en tokens hasta que encuentre uno que este en su first
+        # Pila vacía -> meter inicial a la pila y hacer pop en tokens hasta que encuentre uno que este en su first
+        stack.append("$")
+        stack.append(initial)
+        while(tokens[0] not in firstS):
+            tokens.pop(0)
+        output.append("Pila vacía, llenar hasta token in First(S)")
 
     elif(token in matrix[top]):
         if ("#" in matrix[top][token]):
             output.append("Salida " + top + " -> #")
         else: #Checar si es SYNC dentro de este else -> se omite el top
-            insertRule(top, token)
-            output.append("Salida " + top + " -> " + "".join(matrix[top][token]))
+            if "sync" in matrix[top][token]:
+                output.append("error:M[" + top + "," + token + "] = sync, " + "pop(" + top + ")")
+            elif "eps" in matrix[top][token]:
+                output.append("Salida " + top + " -> " + "".join(matrix[top][token]))
+            else:
+                insertRule(top, token)
+                output.append("Salida " + top + " -> " + "".join(matrix[top][token]))
 
     else: #Aqui se revisa si el error fue M[top,token] o si top != token
-        output.append("Error") #Error M[top,token] en blanco -> se omite el simbolo token
+        if token not in matrix[top]:
+            tokens.pop(0)
+            stack.append(top)
+            output.append("Error: Símbolo omitido")
+        else:
+            output.append("pop(" + top + ")")
 
-    print("{:>12}\t{:>12}\t{:>12}\t{:<12}".format(output[0], output[1], output[2], output[3]))
-    if (output[3] == "Error"): break #Corregir esta parte o quitarla
+    print("{:>16}\t{:>16}\t{:>16}\t{:<16}".format(output[0], output[1], output[2], output[3]))
     del output[:]
 
     if (len(stack) == 0):
