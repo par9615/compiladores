@@ -1,9 +1,9 @@
 stack = []
-tokens = ["(","int","+","int",")","(", "int",")","$"]
+tokens = ["(","int","+","int", ")" ,"*" , ")" ,"int", "+", "int" ,"$"]
 terminals = ["int", "+","*","(",")", "$"]
 nonTerminals = ["E","E'","T","T'", "F"]
 initial = "E"
-firstS = ["(", "int", "$"]
+firstS = ["(", "int"]
 
 matrix = {
     "E": {
@@ -97,14 +97,14 @@ while(len(stack)):
         stack.append(initial)
         while(tokens[0] not in firstS):
             tokens.pop(0)
-        output.append("Pila vacía, llenar hasta token in First(S)")
+        output.append("Pila vacía, borrar hasta token in First(S)")
 
     elif(token in matrix[top]):
         if ("#" in matrix[top][token]):
             output.append("Salida " + top + " -> #")
         else: #Checar si es SYNC dentro de este else -> se omite el top
             if "sync" in matrix[top][token]:
-                output.append("error:M[" + top + "," + token + "] = sync, " + "pop(" + top + ")")
+                output.append("Error: M[" + top + "," + token + "] = sync, " + "pop(" + top + ")")
             elif "eps" in matrix[top][token]:
                 output.append("Salida " + top + " -> " + "".join(matrix[top][token]))
             else:
