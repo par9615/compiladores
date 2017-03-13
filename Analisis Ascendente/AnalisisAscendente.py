@@ -1,5 +1,5 @@
 stack = []
-tokens = ["int", "*", "(", "int", "+" , "int", ")", ")" "$"]
+tokens = ["(", "id"," ", "+", "id", ")", " ", "*"," ", ")", "id", " ", "+", "id", "$"]
 symbols = []
 terminals = []
 nonTerminals = []
@@ -7,94 +7,100 @@ initial = 0
 
 matrix = {
     0 : {
-        "int":   "S4",
-        "(" :   "S3" ,
+        "id":   "S5",
+        "(" :   "S4" ,
         "E" :   "G1",
-        "T" :   "G2"
+        "T" :   "G2",
+        "F" :   "G3"
     },
 
     1: {
-        "$":    "AC"
+        "$":    "AC",
+        "+":    "S6"
     },
 
     2: {
-        "+":    "S6",
-        ")":    "R5",
-        "$":    "R5",
-        "X":    "G5"
-    },
-
-    3: {
-        "int":    "S4",
-        "(":    "S3",
-        "E":    "G7",
-        "T":    "G2"
-    },
-
-    4: {
-        "+":   "R7",
-        "*" :   "S11",
-        ")" :   "R7",
-        "$" :   "R7",
-        "Y" :   "G10"
-    },
-
-    5: {
-        "+":   "R1",
-        ")" :   "R1",
-        "$" :   "R1"
-    },
-
-    6: {
-        "int":   "S4",
-        "(" :   "S3",
-        "E" :   "G8",
-        "T" :   "G2"
-    },
-
-    7: {
-        ")":   "S9"
-    },
-
-    8:  {
-        "+":    "R4",
-        ")":    "R4",
-        "$":    "R4"
-    },
-
-    9:  {
         "+":    "R2",
+        "*":    "S7",
         ")":    "R2",
         "$":    "R2"
     },
 
+    3: {
+        "+":    "R4",
+        "*":    "R4",
+        ")":    "R4",
+        "$":    "R4"
+    },
+
+    4: {
+        "id":   "S5",
+        "(" :   "S4" ,
+        "E" :   "G8",
+        "T" :   "G2",
+        "F" :   "G3"
+    },
+
+    5: {
+        "+":    "R6",
+        "*":    "R6",
+        ")":    "R6",
+        "$":    "R6"
+    },
+
+    6: {
+        "id":   "S5",
+        "(" :   "S4" ,
+        "T" :   "G9",
+        "F" :   "G3"
+    },
+
+    7: {
+        "id":   "S5",
+        "(" :   "S4" ,
+        "F" :   "G10"
+    },
+
+    8:  {
+        "+":    "S6",
+        ")":    "S11"
+    },
+
+    9:  {
+        "+":    "R1",
+        "*":    "S7",
+        ")":    "R1",
+        "$":    "R1"
+    },
+
     10: {
         "+":    "R3",
+        "*":    "R3",
         ")":    "R3",
         "$":    "R3"
     },
 
     11: {
-        "int":  "S4",
-        "(":    "S3",
-        "T":    "G12"
-    },
-
-    12: {
-        "+":    "R6",
-        ")":    "R6",
-        "$":    "R6"
+        "+":    "R5",
+        "*":    "R5",
+        ")":    "R5",
+        "$":    "R5"
     }
 }
 
 grammar = {
-        1: ("E", ["T","X"]),
-        2:  ("T",["(", "E", ")"]),
-        3: ("T",["int", "Y"]),
-        4: ("X", ["+", "E"]),
-        5: ("X", []),
-        6: ("Y",["*", "Y"]),
-        7: ("Y", [])
+        1: ("E", ["E","+","T"]),
+        2:  ("E",["T"]),
+        3: ("T",["T","*","F"]),
+        4: ("T", ["F"]),
+        5: ("F", ["(","E",")"]),
+        6: ("F",["F"])
+}
+
+follow = {
+    "E": ["$", ")"],
+    "T": ["$", ")", "+", "*"],
+    "F": ["$", ")", "+", "*"]
 }
 
 def pushNextState(top, token):  #Hace un push en la pila del estado en matrix[top][token] -> "S5" hace stack.append(5)
@@ -128,6 +134,32 @@ def action(top, token):             #Retorna la acción en matrix[top][token] ->
 def getState(top, token):           #Retorna el estado en matrix[top][token] -> "S5" return int(5)
     return int(matrix[top][token][1:])
 
+def handleError(top):
+    global stack
+    global follow
+    global tokens
+    global symbols
+
+    A = "E"
+    inputToken = tokens[0]
+    s = top
+
+    while(not(A in matrix[s])):
+        stack.pop()
+        s = stack[-1]
+
+    while(not(inputToken in follow[A])):
+        tokens.pop(0)
+        inputToken = tokens[0]
+
+
+    stack.append(getState(s,A))
+
+    symbols.append(A)
+
+
+
+
 ####################################
 
 stack.append(initial)
@@ -155,7 +187,7 @@ while(1):
             symbols.append(token)
             tokens.pop(0)
             token = tokens[0]
-            output.append("Shift " + act[1])
+            output.append("Shift " + act[1:])
 
         elif("R" in act): #Reduce
             rule = reduce(top,token)
@@ -165,14 +197,18 @@ while(1):
             output.append("Aceptado")
 
         else:
-            output.append("Error")
+            handleError(top)
+            token = tokens[0]
+            output.append("Error T")
 
     else:
-        output.append("Error")
+        handleError(top)
+        token = tokens[0]
+        output.append("Error T")
 
     print(formattedString.format(output[0], output[1], output[2], output[3]))
 
-    if (output[-1] == "Error" or output[-1] == "Aceptado"):
+    if (output[-1] == "Aceptado"):
         break;
 
     del output[:]
