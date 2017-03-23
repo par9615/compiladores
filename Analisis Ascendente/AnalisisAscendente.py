@@ -1,7 +1,8 @@
 stack = []
-tokens = ["(", "id"," ", "+", "id", ")", " ", "*"," ", ")", "id", " ", "+", "id", "$"]
+inputString = "(id + id) * ) id + "
+tokens = []
 symbols = []
-terminals = []
+terminals = ["(", ")", "id", "+", "*"]
 nonTerminals = []
 initial = 0
 
@@ -103,6 +104,25 @@ follow = {
     "F": ["$", ")", "+", "*"]
 }
 
+def getTokens(inputString):
+    i = 0
+    while (i < len(inputString)):
+        character = inputString[i]
+        if (character == ' '):
+            i+=1
+        for terminal in terminals:
+            count = 0
+            for letter in terminal:
+                if (i < len(inputString) and letter == inputString[i]):
+                    i += 1
+                    count += 1
+                else:
+                    break
+            if (count == len(terminal)):
+                tokens.append(terminal)
+                break
+    tokens.append('$')
+
 def pushNextState(top, token):  #Hace un push en la pila del estado en matrix[top][token] -> "S5" hace stack.append(5)
     global stack
     state = getState(top,token)
@@ -161,6 +181,8 @@ def handleError(top):
 
 
 ####################################
+
+getTokens(inputString)
 
 stack.append(initial)
 

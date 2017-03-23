@@ -1,6 +1,7 @@
 stack = []
-tokens = ["(","int","+","int", ")" ,"*" , ")" ,"int", "+", "int" ,"$"]
-terminals = ["int", "+","*","(",")", "$"]
+inputString = '(int+int)*)int+int'
+tokens = []
+terminals = ["int", "+","*","(",")"]
 nonTerminals = ["E","E'","T","T'", "F"]
 initial = "E"
 firstS = ["(", "int"]
@@ -61,9 +62,29 @@ def insertRule(top, token):
     for value in reversedRule:
         stack.append(value)
 
+def getTokens(inputString):
+    i = 0
+    while (i < len(inputString)):
+        character = inputString[i]
+        if (character == ' '):
+            i+=1
+        for terminal in terminals:
+            count = 0
+            for letter in terminal:
+                if (i < len(inputString) and letter == inputString[i]):
+                    i += 1
+                    count += 1
+                else:
+                    break
+            if (count == len(terminal)):
+                tokens.append(terminal)
+                break
+    tokens.append('$')
+
 
 ########################
 
+getTokens(inputString)
 
 stack.append("$")
 stack.append("E")            #inicializar la stack
