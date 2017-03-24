@@ -1,5 +1,5 @@
 stack = []
-inputString = '(int+int)*)int+int'
+inputString = ''
 tokens = []
 terminals = ["int", "+","*","(",")"]
 nonTerminals = ["E","E'","T","T'", "F"]
@@ -83,6 +83,8 @@ def getTokens(inputString):
 
 
 ########################
+
+input(str(inputString))
 
 getTokens(inputString)
 

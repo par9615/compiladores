@@ -1,5 +1,5 @@
 stack = []
-inputString = "(id + id) * ) id + "
+inputString = ""
 tokens = []
 symbols = []
 terminals = ["(", ")", "id", "+", "*"]
@@ -181,6 +181,8 @@ def handleError(top):
 
 
 ####################################
+
+input(str(inputString))
 
 getTokens(inputString)
 
