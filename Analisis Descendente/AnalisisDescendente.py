@@ -1,44 +1,22 @@
 stack = []
 inputString = ''
 tokens = []
-terminals = ["int", "+","*","(",")"]
-nonTerminals = ["E","E'","T","T'", "F"]
-initial = "E"
+terminals = ["a", "b", "c"]
+nonTerminals = []
+initial = "S"
 firstS = ["(", "int"]
 
 matrix = {
-    "E": {
-        "int" : ["T","E'"] ,
-        "("  : ["T","E'"],
-        ")"  : ["sync"],
+    "S": {
+        "a" : ["a", "A"] ,
+        "c"  : ["sync"],
         "$"  : ["sync"]
     },
-    "E'": {
-        "+"  : ["+","T","E'"],
-        ")"  : ["eps"],
-        "$"  : ["eps"]
-    },
-    "T": {
-        "int" : ["F", "T'"],
-        "+"  : ["sync"],
-        "("  : ["F","T'"],
-        ")"  : ["sync"],
-        "$"  : ["sync"]
-    },
-    "T'" : {
-        "+"  : ["eps"],
-        "*"  : ["*", "F", "T'"],
-        ")"  : ["eps"],
-        "$"  : ["eps"]
-        },
-    "F" : {
-        "int"  : ["int"],
-        "+"  : ["sync"],
-        "*"  : ["sync"],
-        "("  : ["(", "E", ")"],
-        ")"  : ["sync"],
-        "$"  : ["sync"]
-        }
+    "A": {
+        "b" : ["b", "b", "S", "c"],
+        "c" : ["#"],
+        "$" : ["#"]
+    }
 }
 
 
@@ -84,12 +62,12 @@ def getTokens(inputString):
 
 ########################
 
-input(str(inputString))
+inputString = input("Escriba entrada \n>")
 
 getTokens(inputString)
 
 stack.append("$")
-stack.append("E")            #inicializar la stack
+stack.append(initial)            #inicializar la stack
 coincidence = ''               #incializar coincidencias
 
 
