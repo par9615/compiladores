@@ -49,7 +49,7 @@ matrix = {
 
 grammar = {
         1: ("S", ["a","A"]),
-        2:  ("A",["#"]),
+        2:  ("A",[]),
         3: ("A",["b","b","S","c"])
 }
 
@@ -114,7 +114,7 @@ def handleError(top):
     global tokens
     global symbols
 
-    A = "E"
+    A = "S"
     inputToken = tokens[0]
     s = top
 
