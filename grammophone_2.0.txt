@@ -7,6 +7,8 @@
 Sx -> A_aug ;.
 Sx -> A_sim ;.
 Sx -> A_dro ;.
+Sx -> Ctrl Sx.
+Sx -> Ctrl.
 
 A_aug -> ID Ao Ex.
 A_sim -> ID = Ex.
@@ -87,6 +89,12 @@ Dc -> = **(STRING,NUMBER)**.
 Dc -> -< (Ex,Ex,Ex).
 Dc -> -) (Ex,Ex,Ex).
 
+
+#Ctrl statement
+Ctrl -> For.
+Ctrl -> While.
+
 #For & while loops
 For -> for(ID:(Ex,Ex)){Sx}.
 While -> While(Ex){Sx}.
+
