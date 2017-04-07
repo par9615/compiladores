@@ -26,7 +26,7 @@ Ao -> **=.
 
 Ex -> Or_l.
 
-#Parte comparaciones lógicas
+#Parte comparaciones lÃ³gicas
 Or_l -> Or_l oo And_l.
 Or_l -> And_l.
  
@@ -60,7 +60,7 @@ Shift -> Shift >> Ax.
 Shift -> Shift << Ax.
 Shift -> Ax.
 
-#Parte aritmética
+#Parte aritmÃ©tica
 
 Ax -> Ax + Af.
 Ax -> Ax - Af.
@@ -86,3 +86,7 @@ Si -> .
 Dc -> = **(STRING,NUMBER)**.
 Dc -> -< (Ex,Ex,Ex).
 Dc -> -) (Ex,Ex,Ex).
+
+#For & while loops
+For -> for(ID:(Ex,Ex)){Sx}.
+While -> While(Ex){Sx}.
