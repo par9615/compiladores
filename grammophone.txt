@@ -98,5 +98,7 @@ Ctrl -> If.
 #For & while loops
 For -> for(ID:( Ex , Ex )){ Sx }.
 While -> While( Ex ){ Sx }.
+
+#If statement
 If -> if ( Ex ) { Sx }.
 If -> if ( Ex ) else { Sx }.
