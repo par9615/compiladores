@@ -6,4 +6,7 @@ $(document).ready(function() {
 		realHeaders.push($(childrenHeaders[i]).html().replace(/(<b>|<\/b>|<i>|<\/i>|<u>|<\/u>)/g, '').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&'));
 	}
 	console.log(realHeaders);
+	for (var i = 1; i < childrenTable.length; i++) {
+		
+	}
 });
