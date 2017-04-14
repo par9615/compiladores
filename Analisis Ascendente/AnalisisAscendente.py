@@ -1,4 +1,6 @@
+################# Global variables #################
 stack = []
+####################################################
 inputString = ""
 tokens = []
 symbols = []
@@ -142,7 +144,7 @@ getTokens(inputString)
 
 stack.append(initial)
 
-formattedString = "{:>13}\t{:>13}\t{:>13}\t{:>15}"
+formattedString = "{:>15}\t{:>15}\t{:>15}\t{:>15}"
 
 print(formattedString.format("Pila", "Simbolos", "Entrada", "Acción"))
 output = []

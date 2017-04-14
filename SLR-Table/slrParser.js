@@ -132,7 +132,6 @@ $(document).ready(function() {
 	for (var i = 0; i < childrenHeaders.length; i++) {
 		realHeaders.push($(childrenHeaders[i]).html().replace(/(<b>|<\/b>|<i>|<\/i>|<u>|<\/u>)/g, '').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&'));
 	}
-	console.log(realHeaders);
 	// Going through rows
 	for (var i = 1; i < childrenTable.length; i++) {
 		var row = $(childrenTable[i]).children();
@@ -147,7 +146,25 @@ $(document).ready(function() {
 			matrix[rowNum][realHeaders[j]] = parseValue(value);
 		}
 	}
-	console.log(matrix);
+	var keys = Object.keys(matrix);
+	var lastKey = keys[keys.length-1];
+	console.log('matrix = {');
+	for(var stateIndex in matrix) {
+		var headers = Object.keys(matrix[stateIndex]);
+		var lastHeader = headers[headers.length-1];
+		console.log('\t' + stateIndex + ' : {');
+		for (var columnHeader in matrix[stateIndex]) {
+			var closeValue = '\t\t"' + columnHeader + '":\t"' + matrix[stateIndex][columnHeader] + '"';
+			if (columnHeader != lastHeader)
+				closeValue += ',';
+			console.log(closeValue);
+		}
+		var closeString = '\t}';
+		if (stateIndex != lastKey)
+			closeString += ',';
+		console.log(closeString);
+	}
+	console.log('}');
 });
 
 function parseValue(value) {
