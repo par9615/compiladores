@@ -4,20 +4,22 @@ class TokenizerException(Exception): pass
 
 class Token(object):
     def __init__(self,pattern): 
-        token_re = re.compile(pattern, re.VERBOSE)
+        self.token_re = re.compile(pattern, re.VERBOSE)
 
     def getTokens(self, text):
         return tokenizeText(text)
 
     def tokenizeText(self, text):
         pos = 0
+        tokens = []
         while True:
-            m = token_re.match(text, pos)
+            m = self.token_re.match(text, pos)
             if not m: break
             pos = m.end()
             tokname = m.lastgroup
             tokvalue = m.group(tokname)
-            yield tokname, tokvalue
+            tokens.append((tokname, tokvalue))
         if pos != len(text):
-            raise TokenizerException('tokenizer stopped at pos %r of %r' % (
-                pos, len(text)))
+            raise TokenizerException('tokenizer stopped at pos %r of %r with %s' % (
+                pos, len(text), text))
+        return tokens

@@ -142,33 +142,7 @@ class Grammar(object):
 		for rule in rules:
 			for production in rules[rule]:
 				indexRule = rules[rule][production]
-				self.grammar[indexRule] = (rule, tokenizer.tokenizeText(production))
-
-
-grammarPattern = r"""
-(?P<droneDeclarationStart>=\*\*\()
-|(?P<droneDelcarationEnd>\)\*\*)
-|(?P<moveDeclaration>-<)
-|(?P<rotateDeclaration>-\))
-|(?P<leftCurly>[{])
-|(?P<rightCurly>[}])
-|(?P<leftBracket>[(])
-|(?P<rightBracker>[)])
-|(?P<nonTerminal>(Sx|A_aug|A_sim|A_dro|Ao|Ex|Or_l|And_l|Not_l|Lx|Lo|Or_b|Xor_b|And_b|Shift|Ax|Af|Ap|At|Si|Dc|Ctrl|For|While|If))
-|(?P<endStatement>[;])
-|(?P<identifier>ID)
-|(?P<updater>(\+=|-=|\*=|/=|%=|>>=|<<=|&=|\|=|\^=|\*\*=))
-|(?P<comparatorLarger>(<=|>=|==|!=))
-|(?P<operatorLarger>(\|\| | && | \*\*))
-|(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
-|(?P<number>NUMBER)
-|(?P<string>STRING)
-|(?P<epsilon>\#)
-|(?P<reservedWord>(while|if|for))
-|(?P<whitespace>\s+)
-|(?P<twoDots>[:])
-"""
-
-
-grammar = Grammar(grammarPattern)
-print(grammar.grammar)
+				tokens = []
+				for tupleToken in tokenizer.tokenizeText(production):
+					tokens.append(tupleToken[1])
+				self.grammar[indexRule] = (rule, tokens)
