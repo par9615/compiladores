@@ -52,7 +52,7 @@ languagePattern = r"""
 |(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
 |(?P<comparator>(< | >))
 |(?P<number>([0-9]?.[0-9]+|[0-9]+))
-|(?P<string>".*")
+|(?P<string>\"[a-zA-Z]\")
 |(?P<epsilon>\#)
 |(?P<reservedWord>(while|if|for|else))
 |(?P<whitespace>\s+)
@@ -83,12 +83,13 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
     rule  = grammar[getState(top,token)][1]
     head = grammar[getState(top,token)][0]
 
-    for i in range(0, len(rule)):
-        stack.pop()
-        symbols.pop()
+    if (not(len(rule) == 1 and rule[0] == '#')):
+        for i in range(0, len(rule)):
+            stack.pop()
+            symbols.pop()
+        symbols.append(head)
 
     pushNextState(stack[-1], head)
-    symbols.append(head)
 
     return [head, "".join(rule)]
 
@@ -121,69 +122,70 @@ def handleError(top):
     stack.append(getState(s,A))
 
     symbols.append(A)
-####################################################
 
+def algorithm(inputString):
+    global tokens
+    tokens = parser.parseInput(inputString)
 
-################# Global variables #################
-stack = []
-symbols = []
-grammarParsed = Grammar(grammarPattern)
-grammar = grammarParsed.getGrammar()
-parser = Parser(languagePattern)
-initial = getInitial(grammar)
-####################################################
+    stack.append(initial)
 
+    formattedString = "{:>20}\t{:>20}\t{:>20}\t{:>20}"
 
-inputString = input("Escriba entrada \n>")
-tokens = parser.parseInput(inputString)
+    print(formattedString.format("Pila", "Simbolos", "Entrada", "Accion"))
+    output = []
+    token = tokens[0]
 
-stack.append(initial)
+    while(1):
+        output.append(" ".join(map(str,stack)))
 
-formattedString = "{:>20}\t{:>20}\t{:>20}\t{:>20}"
+        output.append("".join(symbols))
 
-print(formattedString.format("Pila", "Simbolos", "Entrada", "Accion"))
-output = []
-token = tokens[0]
+        output.append("".join(tokens))
 
-while(1):
-    output.append(" ".join(map(str,stack)))
+        top = stack[-1]
 
-    output.append("".join(symbols))
+        if(token in matrix[top]):
+            act = action(top, token)
 
-    output.append("".join(tokens))
+            if("S" in act): #Shift
+                pushNextState(top,token)
+                symbols.append(token)
+                tokens.pop(0)
+                token = tokens[0]
+                output.append("Shift " + act[1:])
 
-    top = stack[-1]
+            elif("R" in act): #Reduce
+                rule = reduce(top,token)
+                output.append("Reduce " + rule[0] + " -> " + rule[1])
 
-    if(token in matrix[top]):
-        act = action(top, token)
+            elif("A" in act): #Aceptado
+                output.append("Aceptado")
 
-        if("S" in act): #Shift
-            pushNextState(top,token)
-            symbols.append(token)
-            tokens.pop(0)
-            token = tokens[0]
-            output.append("Shift " + act[1:])
-
-        elif("R" in act): #Reduce
-            rule = reduce(top,token)
-            output.append("Reduce " + rule[0] + " -> " + rule[1])
-
-        elif("A" in act): #Aceptado
-            output.append("Aceptado")
+            else:
+                handleError(top)
+                token = tokens[0]
+                output.append("Error T")
 
         else:
             handleError(top)
             token = tokens[0]
             output.append("Error T")
 
-    else:
-        handleError(top)
-        token = tokens[0]
-        output.append("Error T")
+        print(formattedString.format(output[0], output[1], output[2], output[3]))
 
-    print(formattedString.format(output[0], output[1], output[2], output[3]))
+        if (output[-1] == "Aceptado"):
+            break;
 
-    if (output[-1] == "Aceptado"):
-        break;
+        del output[:]
+####################################################
 
-    del output[:]
+
+################# Global variables #################
+stack = []
+symbols = []
+tokens = []
+grammarParsed = Grammar(grammarPattern)
+grammar = grammarParsed.getGrammar()
+parser = Parser(languagePattern)
+initial = getInitial(grammar)
+####################################################

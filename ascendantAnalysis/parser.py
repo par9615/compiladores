@@ -18,4 +18,5 @@ class Parser(object):
 				continue
 			else:
 				parsedLanguage.append(tupleToken[1])
+		parsedLanguage.append('$')
 		return parsedLanguage
