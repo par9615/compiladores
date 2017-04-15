@@ -126,9 +126,11 @@ def handleError(top):
 
 ################# Global variables #################
 stack = []
-grammar = Grammar(grammarPattern)
+symbols = []
+grammarParsed = Grammar(grammarPattern)
+grammar = grammarParsed.getGrammar()
 parser = Parser(languagePattern)
-initial = getInitial(grammar.grammar)
+initial = getInitial(grammar)
 ####################################################
 
 
@@ -137,7 +139,7 @@ tokens = parser.parseInput(inputString)
 
 stack.append(initial)
 
-formattedString = "{:>15}\t{:>15}\t{:>15}\t{:>15}"
+formattedString = "{:>20}\t{:>20}\t{:>20}\t{:>20}"
 
 print(formattedString.format("Pila", "Simbolos", "Entrada", "Accion"))
 output = []

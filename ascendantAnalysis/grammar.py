@@ -146,3 +146,6 @@ class Grammar(object):
 				for tupleToken in tokenizer.tokenizeText(production):
 					tokens.append(tupleToken[1])
 				self.grammar[indexRule] = (rule, tokens)
+
+	def getGrammar(self):
+		return self.grammar
