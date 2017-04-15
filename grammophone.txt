@@ -78,11 +78,6 @@ Ap -> At.
 
 At -> NUMBER| STRING | ID | ( Ex ).
 
-#Si -> +.
-#Si -> -.
-#Si -> ~.
-#Si -> .
-
 
 #Comandos Drone
 Dc -> = ** ( STRING , NUMBER ) **.
