@@ -2,14 +2,14 @@ import re
 
 class TokenizerException(Exception): pass
 
-class Token(object,pattern):
-    def __init__(self): 
+class Token(object):
+    def __init__(self,pattern): 
         token_re = re.compile(pattern, re.VERBOSE)
 
     def getTokens(self, text):
         return tokenizeText(text)
 
-    def tokenizeText(self, text)
+    def tokenizeText(self, text):
         pos = 0
         while True:
             m = token_re.match(text, pos)

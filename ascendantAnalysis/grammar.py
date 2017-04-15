@@ -1,6 +1,5 @@
-import sys
-sys.path.append("/compiladores/")
-from compiladores.lexicalAnalysis.lexicalAnalyzer import *
+from lexicalAnalysis.lexicalAnalyzer import *
+
 rules = {
 	'Sx' : {
 		'A_aug;Sx' : 0,
@@ -134,10 +133,10 @@ class Singleton(type):
 			cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
 		return cls._instances[cls]
 
-class Grammar(object,grammarPattern):
+class Grammar(object):
 	__metaclass__ = Singleton
 
-	def __init__(self):
+	def __init__(self,grammarPattern):
 		self.grammar = {}
 		tokenizer = Token(grammarPattern)
 		for rule in rules:
@@ -155,21 +154,21 @@ grammarPattern = r"""
 |(?P<rightCurly>[}])
 |(?P<leftBracket>[(])
 |(?P<rightBracker>[)])
-|(?P<non-terminal>(Sx|A_aug|A_sim|A_dro|Ao|Ex|Or_l|And_l|Not_l|Lx|Lo|Or_b|Xor_b|And_b|Shift|Ax|Af|Ap|At|Si|Dc|Ctrl|For|While|If) )
+|(?P<nonTerminal>(Sx|A_aug|A_sim|A_dro|Ao|Ex|Or_l|And_l|Not_l|Lx|Lo|Or_b|Xor_b|And_b|Shift|Ax|Af|Ap|At|Si|Dc|Ctrl|For|While|If))
 |(?P<endStatement>[;])
 |(?P<identifier>ID)
 |(?P<updater>(\+=|-=|\*=|/=|%=|>>=|<<=|&=|\|=|\^=|\*\*=))
 |(?P<comparatorLarger>(<=|>=|==|!=))
 |(?P<operatorLarger>(\|\| | && | \*\*))
-|(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !) )
+|(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
 |(?P<number>NUMBER)
 |(?P<string>STRING)
-|(?P<epsilon>#)
+|(?P<epsilon>\#)
 |(?P<reservedWord>(while|if|for))
 |(?P<whitespace>\s+)
 |(?P<twoDots>[:])
 """
 
 
-grammar = Grammar()
+grammar = Grammar(grammarPattern)
 print(grammar.grammar)

@@ -103,7 +103,7 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
 
     return [head, "".join(rule)]
 
-def action(top, token):             #Retorna la acción en matrix[top][token] -> "S5" return "S"
+def action(top, token):             #Retorna la accion en matrix[top][token] -> "S5" return "S"
     action = matrix[top][token]
     return action
 
@@ -146,7 +146,7 @@ stack.append(initial)
 
 formattedString = "{:>15}\t{:>15}\t{:>15}\t{:>15}"
 
-print(formattedString.format("Pila", "Simbolos", "Entrada", "Acción"))
+print(formattedString.format("Pila", "Simbolos", "Entrada", "Accion"))
 output = []
 token = tokens[0]
 
