@@ -1,12 +1,8 @@
 ################### Imports ########################
-from grammar import *
-from matrix import *
+from ascendantAnalysis.grammar import *
+from ascendantAnalysis.matrix import *
+from ascendantAnalysis.parser import *
 from lexicalAnalysis.lexicalAnalyzer import *
-####################################################
-
-
-################# Global variables #################
-stack = []
 ####################################################
 
 
@@ -39,86 +35,38 @@ grammarPattern = r"""
 """
 
 languagePattern = r"""
+(?P<droneDeclarationStart>=\*\*\()
+|(?P<droneDelcarationEnd>\)\*\*)
+|(?P<moveDeclaration>-<)
+|(?P<rotateDeclaration>-\))
+|(?P<leftCurly>[{])
+|(?P<rightCurly>[}])
+|(?P<leftBracket>[(])
+|(?P<rightBracker>[)])
+|(?P<nonTerminal>(Sx|A_aug|A_sim|A_dro|Ao|Ex|Or_l|And_l|Not_l|Lx|Lo|Or_b|Xor_b|And_b|Shift|Ax|Af|Ap|At|Si|Dc|Ctrl|For|While|If))
+|(?P<endStatement>[;])
+|(?P<identifier>[a-zA-Z_$][a-zA-Z_$0-9]*)
+|(?P<updater>(\+=|-=|\*=|/=|%=|>>=|<<=|&=|\|=|\^=|\*\*=))
+|(?P<comparatorLarger>(<=|>=|==|!=))
+|(?P<operatorLarger>(\|\| | && | \*\*))
+|(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
+|(?P<comparator>(< | >))
+|(?P<number>([0-9]?.[0-9]+|[0-9]+))
+|(?P<string>".*")
+|(?P<epsilon>\#)
+|(?P<reservedWord>(while|if|for|else))
+|(?P<whitespace>\s+)
+|(?P<twoDots>[:])
+|(?P<comma>[,])
+|(?P<equal>[=])
 """
 ####################################################
 
-inputString = ""
-tokens = []
-symbols = []
-terminals = ["a", "b", "c"]
-nonTerminals = []
-initial = 0
 
-matrix = {
-    0 : {
-        "a":   "S2",
-        "S" :   "G1"
-    },
-
-    1: {
-        "$":    "AC"
-    },
-
-    2: {
-        "b":    "S4",
-        "c":    "R2",
-        "$":    "R2",
-        "A":    "G3"
-    },
-
-    3: {
-        "c":    "R1",
-        "$":    "R1"
-    },
-
-    4: {
-        "b":   "S5"
-    },
-
-    5: {
-        "a":    "S2",
-        "S":    "G6"
-    },
-
-    6: {
-        "c":   "S7"
-    },
-
-    7: {
-        "c":   "R3",
-        "$" :   "R3"
-    }
-}
-
-grammar = {
-        1: ("S", ["a","A"]),
-        2:  ("A",[]),
-        3: ("A",["b","b","S","c"])
-}
-
-follow = {
-    "S": ["$", "c"],
-    "A": ["$", "c"]
-}
-
-def getTokens(inputString):
-    i = 0
-    while (i < len(inputString)):
-        character = inputString[i]
-        if (character == ' '):
-            i+=1
-        for terminal in terminals:
-            count = 0
-            for letter in terminal:
-                if (i < len(inputString) and letter == inputString[i]):
-                    i += 1
-                    count += 1
-                else:
-                    break
-            if (count == len(terminal)):
-                tokens.append(terminal)
-                break
-    tokens.append('$')
+##################### Functions ####################
+def getInitial(grammar):
+   index = grammar.keys()
+   return min(index)
 
 def pushNextState(top, token):  #Hace un push en la pila del estado en matrix[top][token] -> "S5" hace stack.append(5)
     global stack
@@ -173,15 +121,19 @@ def handleError(top):
     stack.append(getState(s,A))
 
     symbols.append(A)
+####################################################
 
 
+################# Global variables #################
+stack = []
+grammar = Grammar(grammarPattern)
+parser = Parser(languagePattern)
+initial = getInitial(grammar.grammar)
+####################################################
 
-
-####################################
 
 inputString = input("Escriba entrada \n>")
-
-getTokens(inputString)
+tokens = parser.parseInput(inputString)
 
 stack.append(initial)
 
