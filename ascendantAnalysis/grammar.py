@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/compiladores/")
 from compiladores.lexicalAnalysis.lexicalAnalyzer import *
 rules = {
 	'Sx' : {
