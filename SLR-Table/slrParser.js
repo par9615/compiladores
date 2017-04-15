@@ -124,11 +124,12 @@ var rules = {
 	}
 };
 var matrix = {};
+var childrenTable, childrenHeaders, realHeaders;
 
 $(document).ready(function() {
-	var childrenTable = $('table tbody').children();
-	var childrenHeaders = $(childrenTable[0]).children();
-	var realHeaders = [];
+	childrenTable = $('table tbody').children();
+	childrenHeaders = $(childrenTable[0]).children();
+	realHeaders = [];
 	for (var i = 0; i < childrenHeaders.length; i++) {
 		realHeaders.push($(childrenHeaders[i]).html().replace(/(<b>|<\/b>|<i>|<\/i>|<u>|<\/u>)/g, '').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&'));
 	}
@@ -181,4 +182,10 @@ function parseValue(value) {
 		value = "S" + value.substring(value.indexOf('(')+1, value.indexOf(')'));
 	}
 	return value;
+}
+
+function getCell(header,state) {
+	var indexCol = realHeaders.indexOf(header);
+	var row = $(childrenTable[state+1]).children();
+	return $(row[indexCol]);
 }
