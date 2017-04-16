@@ -93,36 +93,30 @@ rules = {
 		'At' : 54
 	},
 	'At' : {
-		'SiNUMBER' : 55,
+		'NUMBER' : 55,
 		'STRING' : 56,
-		'SiID' : 57,
-		'Si(Ex)' : 58
-	},
-	'Si' : {
-		'+' : 59,
-		'-' : 60,
-		'~' : 61,
-		'#' : 62
+		'ID' : 57,
+		'(Ex)' : 58
 	},
 	'Dc' : {
-		'=**(STRING,NUMBER)**' : 63,
-		'-<(Ex,Ex,Ex)' : 64,
-		'-)(Ex,Ex,Ex)' : 65
+		'=**(STRING,NUMBER)**' : 59,
+		'-<(Ex,Ex,Ex)' : 60,
+		'-)(Ex,Ex,Ex)' : 61
 	},
 	'Ctrl' : {
-		'For' : 66,
-		'While' : 67,
-		'If' : 68
+		'For' : 62,
+		'While' : 63,
+		'If' : 64
 	},
 	'For' : {
-		'for(ID:(Ex,Ex)){Sx}' : 69
+		'for(ID:(Ex,Ex)){Sx}' : 65
 	},
 	'While' : {
-		'while(Ex){Sx}' : 70
+		'while(Ex){Sx}' : 66
 	},
 	'If' : {
-		'if(Ex){Sx}' : 71,
-		'if(Ex)else{Sx}' : 72
+		'if(Ex){Sx}' : 67,
+		'if(Ex)else{Sx}' : 68
 	}
 }
 
