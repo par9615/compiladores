@@ -1,5 +1,14 @@
 from lexicalAnalysis.lexicalAnalyzer import *
 
+##################### Functions ####################
+def semantic9():
+	print('Semantic 9')
+
+def semantic8():
+	print('Semantic 8')
+
+####################################################
+
 rules = {
 	'Sx' : {
 		'A_aug;Sx' : 0,
@@ -12,10 +21,16 @@ rules = {
 		'Ctrl' : 7
 	},
 	'A_aug' : {
-		'IDAoEx': 8
+		'IDAoEx': {
+			'number': 8,
+			'semantic': semantic8
+		}
 	},
 	'A_sim' : {
-		'ID=Ex' : 9
+		'ID=Ex' : {
+			'number': 9,
+			'semantic' : semantic9
+		}
 	},
 	'A_dro' : {
 		'IDDc' : 10
