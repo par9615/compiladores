@@ -52,7 +52,7 @@ languagePattern = r"""
 |(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
 |(?P<comparator>(< | >))
 |(?P<number>([0-9]?.[0-9]+|[0-9]+))
-|(?P<string>\"[a-zA-Z]\")
+|(?P<string>[\"])
 |(?P<epsilon>\#)
 |(?P<reservedWord>(while|if|for|else))
 |(?P<whitespace>\s+)
@@ -64,6 +64,14 @@ languagePattern = r"""
 
 
 ##################### Functions ####################
+def contains(l, filter):
+    function = False
+    for value in l:
+        if filter(value):
+            function = True
+            break
+    return function
+
 def getInitial(grammar):
    index = grammar.keys()
    return min(index)
@@ -80,8 +88,10 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
     global stack
     global symbols
 
-    rule  = grammar[getState(top,token)][1]
-    head = grammar[getState(top,token)][0]
+    production = grammar[getState(top, token)]
+
+    rule  = production[1]
+    head = production[0]
 
     if (not(len(rule) == 1 and rule[0] == '#')):
         for i in range(0, len(rule)):
@@ -90,6 +100,9 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
         symbols.append(head)
 
     pushNextState(stack[-1], head)
+
+    if (len(production) == 3 and contains(production, lambda value : hasattr(value, '__call__'))):
+        production[2]()
 
     return [head, "".join(rule)]
 

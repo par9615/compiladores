@@ -7,6 +7,9 @@ def semantic9():
 def semantic8():
 	print('Semantic 8')
 
+def semantic46():
+	print('Semantic 46')
+
 ####################################################
 
 rules = {
@@ -93,7 +96,10 @@ rules = {
 		'Ax' : 45
 	},
 	'Ax' : {
-		'Ax+Af' : 46,
+		'Ax+Af' : {
+			'number' : 46,
+			'semantic': semantic46
+		},
 		'Ax-Af' : 47,
 		'Af' : 48
 	},
@@ -145,16 +151,30 @@ class Singleton(type):
 class Grammar(object):
 	__metaclass__ = Singleton
 
-	def __init__(self,grammarPattern):
+	def __init__(self, grammarPattern):
 		self.grammar = {}
 		tokenizer = Token(grammarPattern)
 		for rule in rules:
 			for production in rules[rule]:
-				indexRule = rules[rule][production]
+				#print("Production : \n" , production)
+				#print("rules[rule]: \n", rules[rule])
+				#print("rules[rule][production]: \n", rules[rule][production])
 				tokens = []
 				for tupleToken in tokenizer.tokenizeText(production):
 					tokens.append(tupleToken[1])
-				self.grammar[indexRule] = (rule, tokens)
+
+				hasSemantic = True if (type(rules[rule][production]) is dict and 'semantic' in rules[rule][production]) else False
+				indexRule, semantic = None, None
+				if (hasSemantic):
+					indexRule = rules[rule][production]['number']
+					semantic = rules[rule][production]['semantic']
+					self.grammar[indexRule] = rule, tokens, semantic
+				else:
+					indexRule = rules[rule][production]
+					self.grammar[indexRule] = rule, tokens
+				#print("IndexRule : \n" , indexRule)
+				#print("Tokens : \n" , tokens)
+				#print("\n\n")
 
 	def getGrammar(self):
 		return self.grammar
