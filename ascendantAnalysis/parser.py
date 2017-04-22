@@ -12,7 +12,7 @@ class Parser(object):
 		for tupleToken in self.tokenizer.tokenizeText(text):
 			if (tupleToken[0] == 'identifier'):
 				parsedLanguage.append('ID')
-			elif (tupleToken[0] == 'number'):
+			elif (tupleToken[0] == 'number' or tupleToken[0] == 'float'):
 				parsedLanguage.append('NUMBER')
 			elif (tupleToken[0] == 'whitespace'):
 				continue

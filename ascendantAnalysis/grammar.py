@@ -24,15 +24,12 @@ rules = {
 		'Ctrl' : 7
 	},
 	'A_aug' : {
-		'IDAoEx': {
-			'number': 8,
-			'semantic': semantic8
-		}
+		'IDAoEx': 8
 	},
 	'A_sim' : {
 		'ID=Ex' : {
 			'number': 9,
-			'semantic' : semantic9
+			'semantic': semantic9
 		}
 	},
 	'A_dro' : {
@@ -96,10 +93,7 @@ rules = {
 		'Ax' : 45
 	},
 	'Ax' : {
-		'Ax+Af' : {
-			'number' : 46,
-			'semantic': semantic46
-		},
+		'Ax+Af' : 46,
 		'Ax-Af' : 47,
 		'Af' : 48
 	},
@@ -114,30 +108,33 @@ rules = {
 		'At' : 54
 	},
 	'At' : {
-		'NUMBER' : 55,
-		'STRING' : 56,
-		'ID' : 57,
-		'(Ex)' : 58
+		'-NUMBER' : 55,
+		'NUMBER' : 56,
+		'STRING' : 57,
+		'-ID': 58,
+		'ID' : 59,
+		'-(Ex)': 60,
+		'(Ex)' : 61,
 	},
 	'Dc' : {
-		'=**(STRING,NUMBER)**' : 59,
-		'-<(Ex,Ex,Ex)' : 60,
-		'-)(Ex,Ex,Ex)' : 61
+		'=**(STRING,NUMBER)**' : 62,
+		'-<(Ex,Ex,Ex)' : 63,
+		'-)(Ex,Ex,Ex)' : 64
 	},
 	'Ctrl' : {
-		'For' : 62,
-		'While' : 63,
-		'If' : 64
+		'For' : 65,
+		'While' : 66,
+		'If' : 67
 	},
 	'For' : {
-		'for(ID:(Ex,Ex)){Sx}' : 65
+		'for(ID:(Ex,Ex)){Sx}' : 68
 	},
 	'While' : {
-		'while(Ex){Sx}' : 66
+		'while(Ex){Sx}' : 69
 	},
 	'If' : {
-		'if(Ex){Sx}' : 67,
-		'if(Ex)else{Sx}' : 68
+		'if(Ex){Sx}' : 70,
+		'if(Ex)else{Sx}' : 71
 	}
 }
 
