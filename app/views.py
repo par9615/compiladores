@@ -6,4 +6,4 @@ from app import app
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('dashboard_home.html', title = 'Parser')
+    return render_template('layout/app.html', title = 'Parser')
