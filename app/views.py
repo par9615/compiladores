@@ -1,10 +1,9 @@
-from flask import render_template
+from flask import render_template, request, jsonify
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from app import app
 
 @app.route('/')
 @app.route('/index')
 def index():
-    user = {'nickname': 'Erick'}  # fake user
-    return render_template('index.html',
-                           title='Home',
-                           user=user)
+    return render_template('dashboard_home.html', title = 'Parser')
