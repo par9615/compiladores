@@ -2,7 +2,11 @@ from flask import render_template, request, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app import app
+import os
+from ascendantAnalysis.grammar import Grammar
+from ascendantAnalysis.ascendantAnalyzer import languagePattern
 
+grammar = Grammar(grammarPattern)
 
 @app.route('/')
 @app.route('/index')
@@ -28,7 +32,17 @@ def configure():
 								'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css'
 							])
 
-@app.route('/upploadGrammophone', methods=['POST'])
-def parseFile():
-	file = request.file['file']
-	return file
+@app.route('/slrParser.html')
+def slrParser():
+	return render_template('')
+
+@app.route('/getRules')
+def getRules():
+	return grammar.getRules()
+
+
+@app.route('/saveMatrix', methods=['POST'])
+def saveMatrix():
+	grammar.matrix = request.matrix
+	return json.dumps({'success':True}), 200, {'ContentType' : 'application/json'}
+
