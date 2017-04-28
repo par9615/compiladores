@@ -99,7 +99,7 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
         for i in range(0, len(rule)):
             stack.pop()
             symbols.pop()
-        symbols.append(head)
+    symbols.append(head)
 
     pushNextState(stack[-1], head)
 

@@ -14,7 +14,7 @@ def index():
 
 @app.route('/configure')
 def configure():
-	return render_template('configure/index.html',
+	return render_template('configure/table.html',
 							title = "Configure parser",
 							navBar = [
 									{'label' : 'Home', 'icon' : 'icon-home', 'url': 'index'},

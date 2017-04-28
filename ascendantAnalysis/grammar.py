@@ -37,11 +37,11 @@ class Grammar(object):
 					continue
 				noSpaces = line.replace('.','').replace('\n', '').replace(' o ', ' | ').replace('oo', '||').replace('o=','|=')
 				arrowIndex = noSpaces.index('->')
-				head = noSpaces[:arrowIndex]
+				head = noSpaces[:arrowIndex].strip()
 				ruleString = noSpaces[arrowIndex + len('->'):]
 				if not(head in self.rules):
 					self.rules[head] = {}
-				self.rules[head][ruleString.lstrip()] = counter
+				self.rules[head][ruleString.strip()] = counter
 				counter += 1
 
 		for rule in self.rules:
