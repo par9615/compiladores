@@ -16,6 +16,7 @@ grammarPattern = r"""
 |(?P<rightCurly>[}])
 |(?P<leftBracket>[(])
 |(?P<rightBracker>[)])
+|(?P<orDetected>[o])
 |(?P<nonTerminal>(Sx|A_aug|A_sim|A_dro|Ao|Ex|Or_l|And_l|Not_l|Lx|Lo|Or_b|Xor_b|And_b|Shift|Ax|Af|Ap|At|Si|Dc|Ctrl|For|While|If))
 |(?P<endStatement>[;])
 |(?P<identifier>ID)

@@ -1,6 +1,5 @@
 ﻿# Type a grammar here:
 
-
 Sx -> A_aug ; Sx.
 Sx -> A_sim ; Sx.
 Sx -> A_dro ; Sx.

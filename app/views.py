@@ -2,11 +2,7 @@ from flask import render_template, request, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app import app
-import os
-from ascendantAnalysis.grammar import Grammar
-from ascendantAnalysis.ascendantAnalyzer import languagePattern
-
-grammar = Grammar(grammarPattern)
+from app import models
 
 @app.route('/')
 @app.route('/index')
@@ -38,7 +34,7 @@ def slrParser():
 
 @app.route('/getRules')
 def getRules():
-	return grammar.getRules()
+	return jsonify(models.grammar.getRules())
 
 
 @app.route('/saveMatrix', methods=['POST'])

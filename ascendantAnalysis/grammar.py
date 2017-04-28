@@ -35,28 +35,32 @@ class Grammar(object):
 			for line in grammoFile:
 				if not('->' in line) or '#' in line:
 					continue
-				noSpaces = line.replace(' ', '').replace('.','')
-				print(noSpaces)
+				noSpaces = line.replace('.','').replace('\n', '').replace(' o ', ' | ').replace('oo', '||').replace('o=','|=')
 				arrowIndex = noSpaces.index('->')
 				head = noSpaces[:arrowIndex]
 				ruleString = noSpaces[arrowIndex + len('->'):]
-				self.rules[head] = {}
-				self.rules[head][ruleString] = counter
+				if not(head in self.rules):
+					self.rules[head] = {}
+				self.rules[head][ruleString.lstrip()] = counter
 				counter += 1
+
 		for rule in self.rules:
 			for production in self.rules[rule]:
 				tokens = []
 				for tupleToken in tokenizer.tokenizeText(production):
-					tokens.append(tupleToken[1])
+					tokensParsed = list(tupleToken)
+					if (tokensParsed[0] == 'orDetected'):
+						tokensParsed[1] = tokensParsed[1].replace('o', '|')
+					tokens.append(tokensParsed[1])
 
-				hasSemantic = True if (type(self.rules[rule][production]) is dict and 'semantic' in rules[rule][production]) else False
+				hasSemantic = True if (type(self.rules[rule][production]) is dict and 'semantic' in self.rules[rule][production]) else False
 				indexRule, semantic = None, None
 				if (hasSemantic):
 					indexRule = self.rules[rule][production]['number']
 					semantic = self.rules[rule][production]['semantic']
 					self.grammar[indexRule] = rule, tokens, semantic
 				else:
-					indexRule = rules[rule][production]
+					indexRule = self.rules[rule][production]
 					self.grammar[indexRule] = rule, tokens
 
 
