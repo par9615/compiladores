@@ -1,5 +1,6 @@
 ﻿# Type a grammar here:
 
+
 Sx -> A_aug ; Sx.
 Sx -> A_sim ; Sx.
 Sx -> A_dro ; Sx.
@@ -75,7 +76,16 @@ Af -> Ap.
 Ap -> At ** Ap.
 Ap -> At.
 
-At -> - NUMBER| NUMBER | STRING | - ID | - ( Ex ).
+At -> Si NUMBER.
+At -> STRING.
+At -> Si ID.
+At -> Si ( Ex ).
+
+Si -> +.
+Si -> -.
+Si -> ~.
+Si -> .
+
 
 #Comandos Drone
 Dc -> = **(STRING,NUMBER)**.
@@ -90,7 +100,7 @@ Ctrl -> If.
 
 #For & while loops
 For -> for(ID:( Ex , Ex )){ Sx }.
-While -> while( Ex ){ Sx }.
+While -> While( Ex ){ Sx }.
 
 #If statement
 If -> if ( Ex ) { Sx }.
