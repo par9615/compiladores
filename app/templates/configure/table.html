@@ -1,21 +1,19 @@
 {% extends "layout/app.html" %}
 
 {% block content %}
-<div class="portlet ligth">
+<div class="portlet light">
 	
 	<div class="portlet-title">
 		<div class="caption">
 			<i class="icon-settings font-red"></i>
 			<span class="caption-subject font-red sbold uppercase">Light Table 1</span>
 		</div>
-		<div class="actions">
-		<div class="btn-group btn-group-devided" data-toggle="buttons">
-			<label class="btn btn-transparent red btn-outline btn-circle btn-sm active">
-			<input type="radio" name="options" class="toggle" id="option1">Actions</label>
-			<label class="btn btn-transparent red btn-outline btn-circle btn-sm">
-			<input type="radio" name="options" class="toggle" id="option2">Settings</label>
-			</div>
-		</div>
+    <div class="actions">
+      <a href="javascript:;" class="btn btn-default mt-ladda-btn ladda-button btn-circle parseTable" data-style="zoom-out" data-spinner-color="#333">
+      <span class="ladda-label">Parse table</span>
+      <span class="ladda-spinner"></span>
+      </a>
+    </div>
 	</div>
 	<div class="portlet-body">
 		<div class="table-scrollable">

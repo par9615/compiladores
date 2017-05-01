@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app import app
 from app import models
+from flaskext.lesscss import lesscss
 
 @app.route('/')
 @app.route('/index')
@@ -22,10 +23,14 @@ def configure():
 							],
 							js = [
 								'assets/pages/scripts/configure/index.js',
-								'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js'
+								'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+								'assets/global/plugins/ladda/spin.min.js',
+								'assets/global/plugins/ladda/ladda.min.js'
 							],
 							css = [
-								'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css'
+								'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
+								'assets/global/plugins/ladda/ladda-themeless.min.css',
+								'assets/pages/css/configure/table_custom.css'
 							])
 
 @app.route('/slrParser.html')
@@ -39,6 +44,6 @@ def getRules():
 
 @app.route('/saveMatrix', methods=['POST'])
 def saveMatrix():
-	grammar.matrix = request.matrix
-	return json.dumps({'success':True}), 200, {'ContentType' : 'application/json'}
+	# models.grammar.matrix = request.json['matrix']
+	return jsonify(request.form)
 

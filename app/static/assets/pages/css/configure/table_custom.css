@@ -1,0 +1,4 @@
+div.portlet-body div.table-scrollable {
+		max-height: 300px;
+		overflow-y: auto;		
+}

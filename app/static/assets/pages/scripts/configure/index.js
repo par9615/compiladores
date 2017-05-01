@@ -1,21 +1,39 @@
-var matrix = {};
-var childrenTable, childrenHeaders, realHeaders;
+var matrix = {}, rules;
+var childrenTable, childrenHeaders, realHeaders, spinnerButton;
 
 $(document).ready(function() {
+	spinnerButton = Ladda.create(document.querySelector('a.parseTable'));
 	$('li.configure').addClass("active open");
 	$('li.configure').find('a').append('<span class="selected"></span>');
-	parseMatrix();
+	getRules();
 	setEvents();
 });
 
+function getRules() {
+	$.ajax({
+		url: '/getRules',
+		method: 'GET',
+	}).done(function(response) {
+		parseMatrix(response);
+	}).fail(function(response) {
+		console.log(response);
+	});
+}
+
 function setEvents() {
-	var data = matrix;
-	$('btn.btn-transparent.red.btn-outline.btn-circle.btn-sm').on('click', function() {
+	$('a.parseTable').on('click', function() {
 		$.ajax({
 			url: '/saveMatrix',
 			method: 'POST',
 			ContentType : 'application/json',
-			data = data
+			data : matrix,
+			beforeSend: function() {
+				spinnerButton.start();
+			},
+			complete: function() {
+				spinnerButton.stop();
+			}
+
 		}).done(function(response) {
 			console.log(response);
 		}).fail( function(respose) {
@@ -27,15 +45,16 @@ function setEvents() {
 		$.ajax({
 			url: '/generateMatrix',
 			method: 'GET'
-		}).done({
+		}).done(function() {
 			console.log('done');
-		}).fail({
+		}).fail(function() {
 			console.log('fail');
 		});
 	});
 }
 
-function parseMatrix() {
+function parseMatrix(parsedRules) {
+	rules = parsedRules;
 	childrenTable = $('table tbody').children();
 	childrenHeaders = $(childrenTable[0]).children();
 	realHeaders = [];
