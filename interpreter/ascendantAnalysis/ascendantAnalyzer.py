@@ -1,7 +1,7 @@
 ################### Imports ########################
-from ascendantAnalysis.grammar import *
-from ascendantAnalysis.matrix import *
-from ascendantAnalysis.parser import *
+from ascendantAnalysis.grammar import grammar
+from ascendantAnalysis.matrix import matrix
+from ascendantAnalysis.parser import Parser
 from lexicalAnalysis.lexicalAnalyzer import *
 from ascendantAnalysis.semantic_functions import semantic_functions
 ####################################################

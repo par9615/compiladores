@@ -1,5 +1,5 @@
-from ..lexicalAnalysis.lexicalAnalyzer import Token
-from .semantic_functions import semantic_functions
+from .lexicalAnalysis.lexicalAnalyzer import Token
+from .ascendantAnalysis.semantic_functions import semantic_functions
 import os
 
 ##################### Global variables ####################
@@ -31,22 +31,14 @@ grammarPattern = r"""
 """
 ###################################################
 
-class Singleton(type):
-	_instances = {}
-	def __call__(cls, *args, **kwargs):
-		if cls not in cls._instances:
-			cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-		return cls._instances[cls]
-
-class Grammar(object):
-	__metaclass__ = Singleton
+class Supplier(object):
 
 	def __init__(self):
 		self.rules = {}
 		self.grammar = {}
 		tokenizer = Token(grammarPattern)
-		current_path = os.path.abspath(__file__)
-		filepath = os.path.abspath(os.path.join(current_path, "..", "..", "grammophone.txt"))
+		module_dir = os.path.dirname(__file__)
+		filepath = os.path.join(module_dir, 'grammophone.txt')
 		with open(filepath, 'r') as grammoFile:
 			counter = 0
 			for line in grammoFile:
@@ -74,7 +66,7 @@ class Grammar(object):
 				has_semantic = True if indexRule in semantic_functions else False
 				self.grammar[indexRule] = rule, tokens, has_semantic
 		module_dir = os.path.dirname(__file__)
-		file_path = os.path.join(module_dir, 'grammar.py')
+		file_path = os.path.join(module_dir, 'ascendantAnalysis\\grammar.py')
 		f = open(file_path, 'w')
 		f.write('grammar = ' + repr(self.grammar) + '\n')
 		f.close()

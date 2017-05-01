@@ -1,9 +1,6 @@
-from ascendantAnalysis.setupGrammar import Singleton
 from lexicalAnalysis.lexicalAnalyzer import *
 
 class Parser(object):
-	__metaclass__ = Singleton
-
 	def __init__(self, pattern):
 		self.tokenizer = Token(pattern)
 
