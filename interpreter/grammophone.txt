@@ -81,9 +81,9 @@ At -> STRING.
 At -> Si ID.
 At -> Si ( Ex ).
 
-Si -> +.
-Si -> -.
-Si -> ~.
+Si -> Si +.
+Si -> Si -.
+Si -> Si ~.
 Si -> .
 
 
