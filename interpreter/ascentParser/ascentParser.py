@@ -55,6 +55,7 @@ def pushNextState(top, token):  #Hace un push en la pila del estado en matrix[to
     stack.append(state)
 
 def shift(top, token):   #No hace nada
+    
     global stack
 
 def reduce(top, token): #Hace todo el procedimiento del reduce
@@ -77,8 +78,9 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
 
     pushNextState(stack[-1], head)
 
-    if(production[2]):
-        semantic_function = semantic_functions[state]
+    if((conditionsExecuted[-1] == 0 and valueCondition[-1]) or (len(conditionsExecuted)==0 and len(valueCondition)==0)):
+        if(production[2]):
+            semantic_function = semantic_functions[state]
 
     ruleString = ""
     for rule in rules:
@@ -184,4 +186,7 @@ tokens = []
 parser = Parser(languagePattern)
 initial = getInitial(grammar)
 symbolsTable = {}
+valueCondition = []
+conditionsExecuted = []
+
 ####################################################
