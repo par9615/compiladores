@@ -11,7 +11,6 @@ from ascentParser.semantic_functions import semantic_functions
 languagePattern = r"""
 (?P<drone>drone)
 |(?P<string>((?P<quote>['"]).*?(?P=quote)))
-|(?P<identifier>[a-zA-Z_$][a-zA-Z_$0-9]*)
 |(?P<leftCurly>[{])
 |(?P<rightCurly>[}])
 |(?P<leftBracket>[(])
@@ -29,6 +28,7 @@ languagePattern = r"""
 |(?P<float>[0-9]?\.[0-9]+)
 |(?P<number>[0-9]+)
 |(?P<reservedWord>(while|if|for|else|elif))
+|(?P<identifier>[a-zA-Z_$][a-zA-Z_$0-9]*)
 |(?P<whitespace>\s+)
 |(?P<twoDots>[:])
 |(?P<equal>[=])
@@ -118,6 +118,7 @@ def handleError(top):
 
 def algorithm(inputString):
     global tokens
+    global symbolsTable
     tokens = parser.parseInput(inputString)
 
     stack.append(initial)
@@ -182,4 +183,5 @@ symbols = []
 tokens = []
 parser = Parser(languagePattern)
 initial = getInitial(grammar)
+symbolsTable = {}
 ####################################################

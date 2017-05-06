@@ -110,7 +110,7 @@ Ctrl -> While.
 Ctrl -> If.
 
 #For & while loops
-For -> for ( ID : ( Ex , Ex ) ) { Sx }.
+For -> for ( ID : Ex , Ex, Ex ) { Sx }.
 While -> while ( Ex ) { Sx }.
 
 #If statement
