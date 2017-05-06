@@ -10,7 +10,6 @@ from ascendantAnalysis.semantic_functions import semantic_functions
 ##################### Patterns #####################
 languagePattern = r"""
 (?P<leftCurly>[{])
-|(?P<quote>['"])(?P<>)
 |(?P<rightCurly>[}])
 |(?P<leftBracket>[(])
 |(?P<rightBracker>[)])
@@ -25,8 +24,6 @@ languagePattern = r"""
 |(?P<comparator>(< | >))
 |(?P<float>([0-9]?.[0-9]+))
 |(?P<number>([0-9]+))
-|(?P<string>[\"])
-|(?P<epsilon>\#)
 |(?P<reservedWord>(while|if|for|else))
 |(?P<whitespace>\s+)
 |(?P<twoDots>[:])

@@ -28,6 +28,7 @@ grammarPattern = r"""
 |(?P<twoDots>[:])
 |(?P<comma>[,])
 |(?P<equal>[=])
+|(?P<string>(?P<quote>['"]).*?(?P=quote))
 """
 ###################################################
 
