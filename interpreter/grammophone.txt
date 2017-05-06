@@ -9,10 +9,12 @@ Sx -> A_sim ;.
 Sx -> A_dro ;.
 Sx -> Ctrl Sx.
 Sx -> Ctrl.
+Sx -> Fun Sx.
+Sx -> Fun.
 
 A_aug -> ID Ao Ex.
 A_sim -> ID = Ex.
-A_dro -> ID Dc.
+A_dro -> ID = Dc.
 
 Ao -> +=.
 Ao -> -=.
@@ -80,6 +82,14 @@ At -> Si NUMBER.
 At -> STRING.
 At -> Si ID.
 At -> Si ( Ex ).
+At -> poi( Lla ).
+At -> list( Par ).
+
+Par -> Ex Pas.
+Par -> .
+
+Pas -> , Ex Pas.
+Pas -> .
 
 Si -> Si +.
 Si -> Si -.
@@ -88,10 +98,13 @@ Si -> .
 
 
 #Comandos Drone
-Dc -> = **(STRING,NUMBER)**.
-Dc -> -< ( Ex , Ex , Ex ).
-Dc -> -) ( Ex , Ex , Ex ).
+Dc -> drone(STRING, Lla ).
 
+Lla -> Ex , Ex , Ex.
+
+# Drone Functions
+Fun -> move_to(ID , Lla ).
+Fun -> rotate(ID, Lla ).
 
 #Ctrl statement
 Ctrl -> For.
@@ -103,5 +116,7 @@ For -> for(ID:( Ex , Ex )){ Sx }.
 While -> While( Ex ){ Sx }.
 
 #If statement
-If -> if ( Ex ) { Sx }.
-If -> if ( Ex ) else { Sx }.
+If -> if ( Ex ) { Sx } El.
+El -> else { Sx }.
+El -> elif ( Ex ) { Sx } El.
+El -> .

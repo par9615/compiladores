@@ -9,11 +9,8 @@ from ascendantAnalysis.semantic_functions import semantic_functions
 
 ##################### Patterns #####################
 languagePattern = r"""
-(?P<droneDeclarationStart>=\*\*\()
-|(?P<droneDelcarationEnd>\)\*\*)
-|(?P<moveDeclaration>-<)
-|(?P<rotateDeclaration>-\))
-|(?P<leftCurly>[{])
+(?P<leftCurly>[{])
+|(?P<quote>['"])(?P<>)
 |(?P<rightCurly>[}])
 |(?P<leftBracket>[(])
 |(?P<rightBracker>[)])
@@ -24,6 +21,7 @@ languagePattern = r"""
 |(?P<comparatorLarger>(<=|>=|==|!=))
 |(?P<operatorLarger>(\|\| | && | \*\*))
 |(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
+|(?P<comma>[,])
 |(?P<comparator>(< | >))
 |(?P<float>([0-9]?.[0-9]+))
 |(?P<number>([0-9]+))
@@ -32,7 +30,6 @@ languagePattern = r"""
 |(?P<reservedWord>(while|if|for|else))
 |(?P<whitespace>\s+)
 |(?P<twoDots>[:])
-|(?P<comma>[,])
 |(?P<equal>[=])
 """
 ####################################################
