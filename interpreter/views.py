@@ -25,9 +25,15 @@ def setMatrix(request):
 	for key in matrixStringKeys:
 		matrix[int(key)] = copy.copy(matrixStringKeys[key])
 	module_dir = os.path.dirname(__file__)
-	file_path = os.path.join(module_dir, 'ascendantAnalysis\\matrix.py')
+	file_path = os.path.join(module_dir, 'ascentParser\\matrix.py')
 	f = open(file_path, 'w')
-	f.write('matrix = ' + repr(matrix) + '\n')
+	f.write('matrix = {\n')
+	for state in matrix:
+		f.write('\t' + str(state) + ' : {\n')
+		for key in matrix[state]:
+			f.write('\t\t\'' + key + '\' : \'' + matrix[state][key] + '\',\n')
+		f.write('\t},\n')
+	f.write('}\n')
 	f.close()
 
 	return HttpResponse(json.dumps(matrix), content_type='application/json')

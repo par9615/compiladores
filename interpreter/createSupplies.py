@@ -1,5 +1,5 @@
 from .lexicalAnalysis.lexicalAnalyzer import Token
-from .ascendantAnalysis.semantic_functions import semantic_functions
+from .ascentParser.semantic_functions import semantic_functions
 import os
 
 ##################### Global variables ####################
@@ -28,7 +28,6 @@ grammarPattern = r"""
 |(?P<twoDots>[:])
 |(?P<comma>[,])
 |(?P<equal>[=])
-|(?P<string>(?P<quote>['"]).*?(?P=quote))
 """
 ###################################################
 
@@ -67,9 +66,12 @@ class Supplier(object):
 				has_semantic = True if indexRule in semantic_functions else False
 				self.grammar[indexRule] = rule, tokens, has_semantic
 		module_dir = os.path.dirname(__file__)
-		file_path = os.path.join(module_dir, 'ascendantAnalysis\\grammar.py')
+		file_path = os.path.join(module_dir, 'ascentParser\\grammar.py')
 		f = open(file_path, 'w')
-		f.write('grammar = ' + repr(self.grammar) + '\n')
+		f.write('grammar = {\n')
+		for indexRule in self.grammar:
+			f.write("\t" + str(indexRule) + " : " + repr(self.grammar[indexRule]) + ",\n")
+		f.write('}\n')
 		f.close()
 
 	def getGrammar(self):

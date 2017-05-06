@@ -1,4 +1,4 @@
-from ascendantAnalysis.ascendantAnalyzer import *
+from ascentParser.ascentParser import *
 
 def main():
 	inputString = input("Escriba entrada \n>")
