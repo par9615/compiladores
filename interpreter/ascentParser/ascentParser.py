@@ -122,7 +122,7 @@ def algorithm(inputString):
 
     stack.append(initial)
 
-    formattedString = "{:>30}\t{:>30}\t{:>30}\t{:>30}"
+    formattedString = "{:<39}\t{:<37}\t{:<37}\t{:>12}"
 
     print(formattedString.format("Pila", "Simbolos", "Entrada", "Accion"))
     output = []

@@ -1,9 +1,7 @@
 ﻿# Type a grammar here:
 
-
 Sx -> A_aug ; Sx.
 Sx -> A_sim ; Sx.
-Sx -> A_dro ; Sx.
 Sx -> A_aug ;.
 Sx -> A_sim ;.
 Sx -> A_dro ;.
@@ -14,7 +12,7 @@ Sx -> Fun.
 
 A_aug -> ID Ao Ex.
 A_sim -> ID = Ex.
-A_dro -> ID = Dc.
+A_sim -> ID = Dc.
 
 Ao -> +=.
 Ao -> -=.
@@ -82,8 +80,8 @@ At -> Si NUMBER.
 At -> STRING.
 At -> Si ID.
 At -> Si ( Ex ).
-At -> poi( Lla ).
-At -> list( Par ).
+At -> poi ( Lla ).
+At -> list ( Par ).
 
 Par -> Ex Pas.
 Par -> .
@@ -98,13 +96,13 @@ Si -> .
 
 
 #Comandos Drone
-Dc -> drone(STRING, Lla ).
+Dc -> drone ( STRING , Lla ).
 
 Lla -> Ex , Ex , Ex.
 
 # Drone Functions
-Fun -> move_to(ID , Lla ).
-Fun -> rotate(ID, Lla ).
+Fun -> move_to ( ID , Lla ).
+Fun -> rotate ( ID , Lla ).
 
 #Ctrl statement
 Ctrl -> For.
@@ -112,8 +110,8 @@ Ctrl -> While.
 Ctrl -> If.
 
 #For & while loops
-For -> for(ID:( Ex , Ex )){ Sx }.
-While -> While( Ex ){ Sx }.
+For -> for ( ID : ( Ex , Ex ) ) { Sx }.
+While -> while ( Ex ) { Sx }.
 
 #If statement
 If -> if ( Ex ) { Sx } El.
