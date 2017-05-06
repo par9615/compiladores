@@ -1,7 +1,13 @@
+from sys import argv
 from ascentParser.ascentParser import *
 
+script, filename = argv
+
 def main():
-	inputString = input("Escriba entrada \n>")
+	inputString = ""
+	with open(filename, 'r') as input_file:
+		for line in input_file:
+			inputString += line.replace('\n', '');
 	algorithm(inputString)
 
 main()

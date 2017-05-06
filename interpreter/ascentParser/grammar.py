@@ -76,7 +76,7 @@ grammar = {
 	74 : ('Ctrl', [b'For'], False),
 	75 : ('Ctrl', [b'While'], False),
 	76 : ('Ctrl', [b'If'], False),
-	77 : ('For', [b'for', b'(', b'ID', b':', b'(', b'Ex', b',', b'Ex', b')', b')', b'{', b'Sx', b'}'], False),
+	77 : ('For', [b'for', b'(', b'ID', b':', b'Ex', b',', b'Ex', b')', b'{', b'Sx', b'}'], False),
 	78 : ('While', [b'while', b'(', b'Ex', b')', b'{', b'Sx', b'}'], False),
 	79 : ('If', [b'if', b'(', b'Ex', b')', b'{', b'Sx', b'}', b'El'], False),
 	80 : ('El', [b'else', b'{', b'Sx', b'}'], False),
