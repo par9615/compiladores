@@ -1,4 +1,5 @@
 ################### Imports ########################
+import re
 from ascentParser.grammar import grammar
 from ascentParser.matrix import matrix
 from ascentParser.parser import Parser
@@ -95,47 +96,58 @@ def getState(top, token):           #Retorna el estado en matrix[top][token] -> 
 
 def handleError(top):
     global stack
-    #global follow
     global tokens
     global symbols
 
     inputToken = tokens[0]
 
-    s = stack[-1]
-
     validState = False
 
+    print('stack',stack)
+    print('entrada', tokens)
+
+    #  Pop states from stack, until one with shift is found
     while not validState:
-        # Pop states from stack, until one with shift is found
-        while(not 'S' in matrix[s].values()):
-            try:
+        try:
+            last = -1
+            s = stack[-1]
+
+            values = list(matrix[s].values())
+            print(''.join(values))
+            # Pop states until we get a state that has a goto
+            while not 'G' in ''.join(values) or s == last:
+                last = s
                 s = stack.pop()
-                #s = stack[-1]
-            except:
-                raise Exception('Invalid input, parsing aborted.')
+                values = list(matrix[s].values())
+            print(''.join(values))
+            print('stack af', stack)
+            print('top af', s)
+            print('entrada af', tokens)
 
-        # If state with shift is found
-
-
-        # Keys in new found state
-        keys = list(matrix[s].keys())
-
-        # Iterate through keys of new found state, reversed
-        for i in range(len(keys)-1, -1, -1):
-            # If value has a goTo (iterating through keys in reversed way)
-            if 'G' in matrix[s][keys[i]]:
-                # If the goTo state has a shift somewhere, we add the state, and it is valid
-                if 'S' in matrix[keys[i]].values():
-                    stack.append(matrix[s][keys[i]][1:])
+            #checar todos los goto's
+            for i in range(len(matrix[s]) - 1, -1, -1):
+                l = list(matrix[s].values())
+                print('ele', l)
+                curr = int(l[i][1:])
+                #print('curr', curr)
+                #print(''.join(list(matrix[curr].values())))
+                if 'S' in ''.join(list(matrix[curr].values())):
+                    #print('succ')
+                    stack.append(curr)
                     validState = True
-
+                    print(stack)
+            last = s
+            s = stack.pop()
+        except:
+            raise Exception('Parsing aborted, expected elements:', ''.join(list(matrix[s].keys())), ' Received:', inputToken)
+    print('recovered state', stack)
     s = stack[-1]
 
     while not inputToken in matrix[s]:
         try:
             inputToken = tokens.pop()
         except:
-            raise Exception('Invalid input, parsing aborted')
+            raise Exception('Parsing aborted, expected elements:', ''.join(list(matrix[s].keys())) , ' Received:', inputToken)
 
 
 
