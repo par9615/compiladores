@@ -82,3 +82,9 @@ class Grammar(object):
 
 	def getRules(self):
 		return self.rules
+
+class Node(object):
+	def __init__(self, string, value, op = None):
+		self.string = string
+		self.value = value
+		self.op = op

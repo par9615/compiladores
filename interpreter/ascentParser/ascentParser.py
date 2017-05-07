@@ -1,8 +1,7 @@
 ################### Imports ########################
-import re
 from ascentParser.grammar import grammar
 from ascentParser.matrix import matrix
-from ascentParser.parser import Parser
+from ascentParser.parser import Parser, InputToken
 from lexicalAnalysis.lexicalAnalyzer import *
 from ascentParser.semantic_functions import semantic_functions
 ####################################################
@@ -46,6 +45,12 @@ def contains(l, filter):
             break
     return function
 
+def parseObjectsToString(objects):
+    outputString = ""
+    for item in objects:
+        outputString += item.lexeme
+    return outputString
+
 def getInitial(grammar):
    index = grammar.keys()
    return min(index)
@@ -55,31 +60,45 @@ def pushNextState(top, token):  #Hace un push en la pila del estado en matrix[to
     state = getState(top,token)
     stack.append(state)
 
-def shift(top, token):   #No hace nada
+def shift(top, token):
+    state  = getState(top,token)
+
+    if(state == 126):
+        semantic_functions["semanticIf"]()
+
+    elif(state == 162):
+        semantic_funtions["semanticElif"]()
+
+    elif(state == 154):
+        semantic_funtions["semanticElse"]()
+
+
+
     global stack
 
 def reduce(top, token): #Hace todo el procedimiento del reduce
     global stack
     global symbols
 
-    state = getState(top, token)
+    state = getState(top, token.lexeme)
     semantic_function = None
 
     production = grammar[state]
 
-    rules  = production[1]
     head = production[0]
+    rules  = production[1]
 
     if (not(len(rules) == 1 and rules[0] == b'\xce\xb5')):
         for i in range(0, len(rules)):
             stack.pop()
             symbols.pop()
-    symbols.append(head)
+    symbols.append(InputToken(head,head))
 
     pushNextState(stack[-1], head)
 
-    if(production[2]):
-        semantic_function = semantic_functions[state]
+    if((len(conditionsExecuted) and len(valueCondition) != 0) and (conditionsExecuted[-1] == 0 and valueCondition[-1]) or (len(conditionsExecuted)==0 and len(valueCondition)==0)):
+        if(production[2]):
+            semantic_function = semantic_functions[state](token.value)
 
     ruleString = ""
     for rule in rules:
@@ -170,17 +189,17 @@ def algorithm(inputString):
     while(1):
         output.append(" ".join(map(str,stack)))
 
-        output.append("".join(symbols))
+        output.append(parseObjectsToString(symbols))
 
-        output.append("".join(tokens))
+        output.append(parseObjectsToString(tokens))
 
         top = stack[-1]
 
-        if(token in matrix[top]):
-            act = action(top, token)
+        if(token.lexeme in matrix[top]):
+            act = action(top, token.lexeme)
 
             if("S" in act): #Shift
-                pushNextState(top,token)
+                pushNextState(top,token.lexeme)
                 symbols.append(token)
                 tokens.pop(0)
                 token = tokens[0]
@@ -221,4 +240,6 @@ tokens = []
 parser = Parser(languagePattern)
 initial = getInitial(grammar)
 symbolsTable = {}
+valueCondition = []
+conditionsExecuted = []
 ####################################################

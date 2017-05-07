@@ -5,17 +5,25 @@ class Parser(object):
 		self.tokenizer = Token(pattern)
 
 	def parseInput(self, text):
-		parsedLanguage = []
+		tokens = []
 		for tupleToken in self.tokenizer.tokenizeText(text):
 			if (tupleToken[0] == 'identifier'):
-				parsedLanguage.append('ID')
+				tokens.append(InputToken('ID', tupleToken[1]))
 			elif (tupleToken[0] == 'number' or tupleToken[0] == 'float'):
-				parsedLanguage.append('NUMBER')
+				tokens.append(InputToken('NUMBER', tupleToken[1]))
 			elif (tupleToken[0] == 'string'):
-				parsedLanguage.append('STRING')
+				tokens.append(InputToken('STRING', tupleToken[1]))
 			elif (tupleToken[0] == 'whitespace'):
 				continue
 			else:
-				parsedLanguage.append(tupleToken[1])
-		parsedLanguage.append('$')
-		return parsedLanguage
+				tokens.append(InputToken(tupleToken[1],tupleToken[1]))
+		tokens.append(InputToken('$'))
+		return tokens
+
+class InputToken(object):
+	def __init__(self, lexeme, value = None):
+		self.lexeme = lexeme
+		self.value = value
+
+	def __str__(self):
+		return self.lexeme
