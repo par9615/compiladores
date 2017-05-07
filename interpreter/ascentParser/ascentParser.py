@@ -115,26 +115,51 @@ def getState(top, token):           #Retorna el estado en matrix[top][token] -> 
 
 def handleError(top):
     global stack
-    global follow
+    #global follow
     global tokens
     global symbols
 
-    A = "S"
     inputToken = tokens[0]
-    s = top
 
-    while(not(A in matrix[s])):
-        stack.pop()
-        s = stack[-1]
+    s = stack[-1]
 
-    while(not(inputToken in follow[A])):
-        tokens.pop(0)
-        inputToken = tokens[0]
+    validState = False
+
+    while not validState:
+        # Pop states from stack, until one with shift is found
+        while(not 'S' in matrix[s].values()):
+            try:
+                s = stack.pop()
+                #s = stack[-1]
+            except:
+                raise Exception('Invalid input, parsing aborted.')
+
+        # If state with shift is found
 
 
-    stack.append(getState(s,A))
+        # Keys in new found state
+        keys = list(matrix[s].keys())
 
-    symbols.append(A)
+        # Iterate through keys of new found state, reversed
+        for i in range(len(keys)-1, -1, -1):
+            # If value has a goTo (iterating through keys in reversed way)
+            if 'G' in matrix[s][keys[i]]:
+                # If the goTo state has a shift somewhere, we add the state, and it is valid
+                if 'S' in matrix[keys[i]].values():
+                    stack.append(matrix[s][keys[i]][1:])
+                    validState = True
+
+    s = stack[-1]
+
+    while not inputToken in matrix[s]:
+        try:
+            inputToken = tokens.pop()
+        except:
+            raise Exception('Invalid input, parsing aborted')
+
+
+
+
 
 def algorithm(inputString):
     global tokens
