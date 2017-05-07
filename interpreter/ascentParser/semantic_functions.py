@@ -21,11 +21,15 @@ def semanticElif(expression):
 
 	valueCondition[-1] = bool(expression)
 
-
+def semantic69():
+	Node("", list())
 
 
 
 
 
 semantic_functions = {
+	# "semanticIf" : semanticIf,
+	# "semanticElse" : semanticElse,
+	# "semanticElif" : semanticElif
 }
