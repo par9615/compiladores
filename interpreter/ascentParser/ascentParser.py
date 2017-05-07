@@ -122,8 +122,8 @@ def handleError(top):
 
     validState = False
 
-    print('stack',stack)
-    print('entrada', tokens)
+    # print('stack',stack)
+    # print('entrada', tokens)
 
     #  Pop states from stack, until one with shift is found
     while not validState:
@@ -132,39 +132,39 @@ def handleError(top):
             s = stack[-1]
 
             values = list(matrix[s].values())
-            print(''.join(values))
+            # print(''.join(values))
             # Pop states until we get a state that has a goto
             while not 'G' in ''.join(values) or s == last:
                 last = s
                 s = stack.pop()
                 values = list(matrix[s].values())
-            print(''.join(values))
-            print('stack af', stack)
-            print('top af', s)
-            print('entrada af', tokens)
+            # print(''.join(values))
+            # print('stack af', stack)
+            # print('top af', s)
+            # print('entrada af', tokens)
 
             #checar todos los goto's
             for i in range(len(matrix[s]) - 1, -1, -1):
                 l = list(matrix[s].values())
-                print('ele', l)
+                # print('ele', l)
                 curr = int(l[i][1:])
-                #print('curr', curr)
-                #print(''.join(list(matrix[curr].values())))
+                # print('curr', curr)
+                # print(''.join(list(matrix[curr].values())))
                 if 'S' in ''.join(list(matrix[curr].values())):
-                    #print('succ')
+                    # print('succ')
                     stack.append(curr)
                     validState = True
-                    print(stack)
+                    # print(stack)
             last = s
             s = stack.pop()
         except:
             raise Exception('Parsing aborted, expected elements:', ''.join(list(matrix[s].keys())), ' Received:', inputToken)
-    print('recovered state', stack)
+    # print('recovered state', stack)
     s = stack[-1]
 
     while not inputToken in matrix[s]:
         try:
-            inputToken = tokens.pop()
+            inputToken = tokens.pop().lexeme
         except:
             raise Exception('Parsing aborted, expected elements:', ''.join(list(matrix[s].keys())) , ' Received:', inputToken)
 
@@ -222,7 +222,7 @@ def algorithm(inputString):
             token = tokens[0]
             output.append("Error T")
 
-        print(formattedString.format(output[0], output[1], output[2], output[3]))
+        # print(formattedString.format(output[0], output[1], output[2], output[3]))
         if (semantic_function):
             semantic_function()
 
