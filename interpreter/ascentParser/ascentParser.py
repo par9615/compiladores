@@ -127,26 +127,32 @@ def handleError(top):
             values = list(matrix[s].values())
 
             while not 'G' in ''.join(values):
-                s = stack.pop()
-                values = list(matrix[s].values())
+                values = list(matrix[stack[-2]].values())
+                stack.pop()
+                s = stack[-1]
 
             for i in range(len(matrix[s]) - 1, -1, -1):
                 l = list(matrix[s].values())
-                if 'G' in l[i]:
-                    curr = int(l[i][1:])
+                k = list(matrix[s].keys())
 
-                    if 'S' in ''.join(list(matrix[curr].values())):
-                        stack.append(curr)
+                if 'G' in l[i]:
+                    currVal = int(l[i][1:])
+                    currKey = InputToken(k[i])
+
+                    if 'S' in ''.join(list(matrix[currVal].values())):
+                        stack.append(currVal)
+                        symbols.pop()
+                        symbols.append(currKey)
                         validState = True
                         break
         except:
-            raise Exception('Parsing aborted, expected elements:', ''.join(list(matrix[s].keys())), ' Received:', inputToken)
-    s = curr
-    while not tokens[0].lexeme in matrix[curr]:
+            raise Exception('Received: ', inputToken, ' when expected one of the following: ', ''.join(list(matrix[s].keys())))
+    s = currVal
+    while not tokens[0].lexeme in matrix[currVal]:
         try:
             tokens.pop(0)
         except:
-            raise Exception('Parsing aborted, expected elements:', ''.join(list(matrix[s].keys())) , ' Received:', inputToken)
+            raise Exception('Received: ', inputToken, ' when expected one of the following: ', ''.join(list(matrix[s].keys())))
 
 
 
