@@ -63,7 +63,7 @@ class Supplier(object):
 					tokens.append(tokensParsed[1].encode("utf-8"))
 
 				indexRule = self.rules[rule][production]
-				has_semantic = True if indexRule in semantic_functions else False
+				has_semantic = True if int(indexRule) in semantic_functions else False
 				self.grammar[indexRule] = rule, tokens, has_semantic
 		module_dir = os.path.dirname(__file__)
 		file_path = os.path.join(module_dir, 'ascentParser\\grammar.py')
