@@ -1,35 +1,21 @@
-def semantic10(popedList):
-	print(popedList)	
+#from ascentParser import symbols
 
-def sematic79(args):
-	print(args)
+def semantic66():
+	print("66")
 
-def semanticIf(expression):
-	global conditionsExecuted
-	global valueCondition
+def semantic67():
+	print("67")
 
-	conditionsExecuted.append(0)	
-	valueCondition.append(bool(expression))
-
-def semanticElse(expression):
-	global valueCondition
-
-	valueCondition[-1] = not valueCondition[-1]
-
-def semanticElif(expression):
-	global valueCondition
-
-	valueCondition[-1] = bool(expression)
+def semantic68():
+	print("sigua")
 
 def semantic69():
-	Node("", list())
-
-
-
+	print("HIZO")
 
 
 semantic_functions = {
-	# "semanticIf" : semanticIf,
-	# "semanticElse" : semanticElse,
-	# "semanticElif" : semanticElif
+	66:	semantic66,
+	67: semantic67,
+	68: semantic68,
+	69: semantic69
 }

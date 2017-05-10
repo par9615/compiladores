@@ -61,7 +61,7 @@ def pushNextState(top, token):  #Hace un push en la pila del estado en matrix[to
     stack.append(state)
 
 def shift(top, token):
-    state  = getState(top,token)
+    """state  = getState(top,token)
 
     if(state == 126):
         semantic_functions["semanticIf"]()
@@ -70,7 +70,7 @@ def shift(top, token):
         semantic_funtions["semanticElif"]()
 
     elif(state == 154):
-        semantic_funtions["semanticElse"]()
+        semantic_funtions["semanticElse"]()*/"""
 
 
 
@@ -86,19 +86,21 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
     production = grammar[state]
 
     head = production[0]
+    result = None
     rules  = production[1]
 
     if (not(len(rules) == 1 and rules[0] == b'\xce\xb5')):
         for i in range(0, len(rules)):
             stack.pop()
             symbols.pop()
-    symbols.append(InputToken(head,head))
+
+    symbols.append(InputToken(head,result))
 
     pushNextState(stack[-1], head)
+    #probablemente se borre esto del IF
 
-    if((len(conditionsExecuted) and len(valueCondition) != 0) and (conditionsExecuted[-1] == 0 and valueCondition[-1]) or (len(conditionsExecuted)==0 and len(valueCondition)==0)):
-        if(production[2]):
-            semantic_function = semantic_functions[state](token.value)
+    if(production[2]):
+        semantic_function = semantic_functions[state](token.value)
 
     ruleString = ""
     for rule in rules:
