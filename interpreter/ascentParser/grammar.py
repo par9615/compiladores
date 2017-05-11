@@ -55,7 +55,7 @@ grammar = {
 	53 : ('Af', [b'Ap'], False),
 	54 : ('Ap', [b'At', b'**', b'Ap'], False),
 	55 : ('Ap', [b'At'], False),
-	56 : ('At', [b'Si', b'NUMBER'], False),
+	56 : ('At', [b'Si', b'NUMBER'], True),
 	57 : ('At', [b'STRING'], False),
 	58 : ('At', [b'Si', b'ID'], False),
 	59 : ('At', [b'Si', b'(', b'Ex', b')'], False),

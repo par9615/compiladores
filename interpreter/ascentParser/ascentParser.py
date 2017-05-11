@@ -37,6 +37,12 @@ languagePattern = r"""
 
 
 ##################### Functions ####################
+def printInputTokens(inputTokens):
+    for value in inputTokens:
+        print(value.lexeme, end=" ")
+    print()
+
+
 def contains(l, filter):
     function = False
     for value in l:

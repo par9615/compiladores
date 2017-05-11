@@ -1,15 +1,13 @@
 import operator
 
-from ascentParser.parser import InputToken
+from parser import *
 
 op = {
-	
-	
-
+	'+'	: operator.pos
 }
 
 
-def sematic56(head, poppedList):
+def semantic56(head, poppedList):
 	number = poppedList[0].value
 	result = InputToken(number, number)
 	
@@ -19,13 +17,16 @@ def sematic56(head, poppedList):
 	return result
 
 def semantic66(head, poppedList):
-	return poppedList[1].value.append("-")
+	poppedList[1].value.append("-")
+	return poppedList[1]
 
 def semantic67(head, poppedList):
-	return poppedList[1].value.append("+")
+	poppedList[1].value.append("+")
+	return poppedList[1]
 
 def semantic68(head, poppedList):
-	return poppedList[1].value.append("~")
+	poppedList[1].value.append("~")
+	return poppedList[1]
 
 def semantic69(head, poppedList):	
 	return InputToken(head, [])
@@ -33,6 +34,7 @@ def semantic69(head, poppedList):
 
 
 semantic_functions = {
+	56: semantic56,
 	66:	semantic66,
 	67: semantic67,
 	68: semantic68,

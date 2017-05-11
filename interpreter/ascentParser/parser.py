@@ -27,3 +27,7 @@ class InputToken(object):
 	
 	def __str__(self):
 		return self.lexeme
+
+class Hola(object):
+	def __init__(self):
+		print("Hola")
