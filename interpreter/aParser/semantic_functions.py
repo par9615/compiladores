@@ -236,6 +236,8 @@ semantic_functions = {
 	54: semantic54,
 	55: semantic55,
 	56: semantic56,
+	57: semantic57,
+	58: semantic58,
 	66:	semantic66,
 	67: semantic67,
 	68: semantic68,

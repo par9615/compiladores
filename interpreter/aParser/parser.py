@@ -14,7 +14,7 @@ class Parser(object):
 			elif (tupleToken[0] == 'float'):
 				tokens.append(InputToken('NUMBER', float(tupleToken[1])))
 			elif (tupleToken[0] == 'string'):
-				tokens.append(InputToken('STRING', tupleToken[1]))
+				tokens.append(InputToken('STRING', tupleToken[1].replace('"', '').replace("'", '')))
 			elif (tupleToken[0] == 'whitespace'):
 				continue
 			else:

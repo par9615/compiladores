@@ -1,2 +1,2 @@
-a = "hola Mike";
+a = "hola Mike" * 2;
 
