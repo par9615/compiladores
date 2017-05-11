@@ -77,8 +77,7 @@ def shift(top, token):
 
     elif(state == 154):
         semantic_funtions["semanticElse"]()*/"""
-
-
+     
 
     global stack
 
