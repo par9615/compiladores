@@ -24,6 +24,6 @@ class InputToken(object):
 	def __init__(self, lexeme, value = None):
 		self.lexeme = lexeme
 		self.value = value
-
+	
 	def __str__(self):
 		return self.lexeme

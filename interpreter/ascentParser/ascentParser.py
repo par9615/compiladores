@@ -82,7 +82,7 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
 
     state = getState(top, token.lexeme)
     semantic_function = None
-
+    poppedList = []
     production = grammar[state]
 
     head = production[0]
@@ -92,15 +92,19 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
     if (not(len(rules) == 1 and rules[0] == b'\xce\xb5')):
         for i in range(0, len(rules)):
             stack.pop()
-            symbols.pop()
+            poppedList.append(symbols.pop())
 
-    symbols.append(InputToken(head,result))
+    
 
     pushNextState(stack[-1], head)
-    #probablemente se borre esto del IF
+    
 
+
+    #Si tiene acción semántica
     if(production[2]):
-        semantic_function = semantic_functions[state](token.value)
+        result = semantic_functions[state](head, poppedList)
+
+    symbols.append(result)
 
     ruleString = ""
     for rule in rules:

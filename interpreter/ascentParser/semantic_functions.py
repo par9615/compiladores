@@ -1,16 +1,35 @@
-#from ascentParser import symbols
+import operator
 
-def semantic66():
-	print("66")
+from ascentParser.parser import InputToken
 
-def semantic67():
-	print("67")
+op = {
+	
+	
 
-def semantic68():
-	print("sigua")
+}
 
-def semantic69():
-	print("HIZO")
+
+def sematic56(head, poppedList):
+	number = poppedList[0].value
+	result = InputToken(number, number)
+	
+	for i in len(poppedList[1].value):
+		result.value = op[poppedList[1].value[i]](result.value)
+
+	return result
+
+def semantic66(head, poppedList):
+	return poppedList[1].value.append("-")
+
+def semantic67(head, poppedList):
+	return poppedList[1].value.append("+")
+
+def semantic68(head, poppedList):
+	return poppedList[1].value.append("~")
+
+def semantic69(head, poppedList):	
+	return InputToken(head, [])
+
 
 
 semantic_functions = {
