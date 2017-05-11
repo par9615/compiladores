@@ -9,8 +9,10 @@ class Parser(object):
 		for tupleToken in self.tokenizer.tokenizeText(text):
 			if (tupleToken[0] == 'identifier'):
 				tokens.append(InputToken('ID', tupleToken[1]))
-			elif (tupleToken[0] == 'number' or tupleToken[0] == 'float'):
-				tokens.append(InputToken('NUMBER', tupleToken[1]))
+			elif (tupleToken[0] == 'number'):
+				tokens.append(InputToken('NUMBER', int(tupleToken[1])))
+			elif (tupleToken[0] == 'float'):
+				tokens.append(InputToken('NUMBER', float(tupleToken[1])))
 			elif (tupleToken[0] == 'string'):
 				tokens.append(InputToken('STRING', tupleToken[1]))
 			elif (tupleToken[0] == 'whitespace'):

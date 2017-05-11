@@ -109,6 +109,8 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
     #Si tiene acción semántica
     if(production[2]):
         result = semantic_functions[state](head, poppedList)
+    else:
+        result = InputToken(head)
 
     symbols.append(result)
 
@@ -116,7 +118,7 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
     for rule in rules:
         ruleString += rule.decode('utf-8')
 
-    return [head, ruleString], semantic_function
+    return [head, ruleString]
 
 def action(top, token):             #Retorna la accion en matrix[top][token] -> "S5" return "S"
     action = matrix[top][token]
@@ -181,7 +183,6 @@ def algorithm(inputString):
     print(formattedString.format("Pila", "Simbolos", "Entrada", "Accion"))
     output = []
     token = tokens[0]
-    semantic_function = None
 
     while(1):
         output.append(" ".join(map(str,stack)))
@@ -203,7 +204,7 @@ def algorithm(inputString):
                 output.append("Shift " + act[1:])
 
             elif("R" in act): #Reduce
-                rule,semantic_function = reduce(top,token)
+                rule = reduce(top,token)
                 output.append("Reduce " + rule[0] + " -> " + rule[1])
 
             elif("A" in act): #Aceptado
@@ -220,8 +221,6 @@ def algorithm(inputString):
             output.append("Error T")
         #cambiar este print
         print(formattedString.format(output[0], output[1], output[2], output[3]))
-        if (semantic_function):
-            semantic_function()
 
         if (output[-1] == "Aceptado"):
             break;

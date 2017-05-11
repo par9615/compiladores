@@ -1,27 +1,30 @@
 import operator
 
-from parser import *
+from ascentParser.parser import InputToken
 
 op = {
-	'+'	: operator.pos
+	'+'	: operator.pos,
+	'-' : operator.neg,
+	'~' : operator.invert
 }
 
 
-def semantic56(head, poppedList):
+def semantic56(head, poppedList):    # In this instance poppedList must be [NUMBER,Si]
 	number = poppedList[0].value
-	result = InputToken(number, number)
+	lexeme = poppedList[0].lexeme
+	result = InputToken(head, number)
 	
-	for i in len(poppedList[1].value):
-		result.value = op[poppedList[1].value[i]](result.value)
-
+	for operation in reversed(poppedList[1].value): 
+		result.value = op[operation](result.value)
+		
 	return result
 
 def semantic66(head, poppedList):
-	poppedList[1].value.append("-")
+	poppedList[1].value.append("+")
 	return poppedList[1]
 
 def semantic67(head, poppedList):
-	poppedList[1].value.append("+")
+	poppedList[1].value.append("-")
 	return poppedList[1]
 
 def semantic68(head, poppedList):
