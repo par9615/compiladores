@@ -238,6 +238,20 @@ def semantic69(head, poppedList):
 	return InputToken(head, [])
 
 
+def semantic70(head,poppedList):
+	pass
+
+def semantic71(head, poppedList):
+	pass
+
+def semantic72(head, poppedList):
+	pass
+
+def semantic73(head, poppedList):
+	pass
+
+def semantic74(head, poppedList):
+	pass
 
 semantic_functions = {
 	23: semantic23,
@@ -278,5 +292,10 @@ semantic_functions = {
 	66:	semantic66,
 	67: semantic67,
 	68: semantic68,
-	69: semantic69
+	69: semantic69,
+	70: semantic70,
+	71: semantic71,
+	72: semantic72,
+	73: semantic73,
+	74: semantic74
 }
