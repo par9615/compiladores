@@ -103,6 +103,7 @@ Lla -> Ex , Ex , Ex.
 # Drone Functions
 Fun -> move_to ( ID , Lla ).
 Fun -> rotate ( ID , Lla ).
+Fun -> print ( Ex ).
 
 #Ctrl statement
 Ctrl -> For.
@@ -118,3 +119,4 @@ If -> if ( Ex ) { Sx } El.
 El -> else { Sx }.
 El -> elif ( Ex ) { Sx } El.
 El -> .
+

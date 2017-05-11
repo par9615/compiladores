@@ -30,6 +30,11 @@ op = {
 	'!' : operator.not_
 }
 
+
+def semantic22_21_20_19_18_17_16_15_14_13_12(head, poppedList):
+	poppedList[0].lexeme = head
+	return poppedList[0]
+
 def semantic23(head, poppedList):
 	poppedList[0].lexeme = head
 	print(poppedList[0].value)
