@@ -1,5 +1,5 @@
 from .lexicalAnalysis.lexicalAnalyzer import Token
-from .ascentParser.semantic_functions import semantic_functions
+from .aParser.semantic_functions import semantic_functions
 import os
 
 ##################### Global variables ####################
@@ -66,7 +66,7 @@ class Supplier(object):
 				has_semantic = True if int(indexRule) in semantic_functions else False
 				self.grammar[indexRule] = rule, tokens, has_semantic
 		module_dir = os.path.dirname(__file__)
-		file_path = os.path.join(module_dir, 'ascentParser\\grammar.py')
+		file_path = os.path.join(module_dir, 'aParser\\grammar.py')
 		f = open(file_path, 'w')
 		f.write('grammar = {\n')
 		for indexRule in self.grammar:

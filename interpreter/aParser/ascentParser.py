@@ -1,9 +1,9 @@
 ################### Imports ########################
-from ascentParser.grammar import grammar
-from ascentParser.matrix import matrix
-from ascentParser.parser import Parser, InputToken
+from aParser.grammar import grammar
+from aParser.matrix import matrix
+from aParser.parser import Parser, InputToken
 from lexicalAnalysis.lexicalAnalyzer import *
-from ascentParser.semantic_functions import semantic_functions
+from aParser.semantic_functions import semantic_functions
 ####################################################
 
 

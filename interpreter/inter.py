@@ -1,5 +1,5 @@
 from sys import argv
-from ascentParser.ascentParser import *
+from aParser.ascentParser import *
 
 script, filename = argv
 

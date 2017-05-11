@@ -25,7 +25,7 @@ def setMatrix(request):
 	for key in matrixStringKeys:
 		matrix[int(key)] = copy.copy(matrixStringKeys[key])
 	module_dir = os.path.dirname(__file__)
-	file_path = os.path.join(module_dir, 'ascentParser\\matrix.py')
+	file_path = os.path.join(module_dir, 'aParser\\matrix.py')
 	f = open(file_path, 'w')
 	f.write('matrix = {\n')
 	for state in matrix:
