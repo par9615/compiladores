@@ -33,20 +33,15 @@ op = {
 	'!' : operator.not_
 }
 
-def semantic0(head, poppedList):
-	poppedList[1].lexeme = head
-	return poppedList[1]
-
-def semantic1(head, poppedList):
-	poppedList[1].lexeme = head
-	return poppedList[1]
 
 def semantic2(head, poppedList):
 	poppedList[1].lexeme = head
+	print(poppedList[1].value)
 	return poppedList[1]
 
 def semantic3(head, poppedList):
 	poppedList[1].lexeme = head
+	print(poppedList[1].value)
 	return poppedList[1]
 
 def semantic9(head, poppedList):
@@ -69,7 +64,6 @@ def semantic22_21_20_19_18_17_16_15_14_13_12(head, poppedList):
 
 def semantic23(head, poppedList):
 	poppedList[0].lexeme = head
-	print(poppedList[0].value)
 	return poppedList[0]
 
 def semantic24(head, poppedList):
@@ -254,6 +248,21 @@ def semantic74(head, poppedList):
 	pass
 
 semantic_functions = {
+	2: semantic2,
+	3: semantic3,
+	9: semantic9,
+	10: semantic10,
+	12: semantic22_21_20_19_18_17_16_15_14_13_12,
+	13: semantic22_21_20_19_18_17_16_15_14_13_12,
+	14: semantic22_21_20_19_18_17_16_15_14_13_12,
+	15: semantic22_21_20_19_18_17_16_15_14_13_12,
+	16: semantic22_21_20_19_18_17_16_15_14_13_12,
+	17: semantic22_21_20_19_18_17_16_15_14_13_12,
+	18: semantic22_21_20_19_18_17_16_15_14_13_12,
+	19: semantic22_21_20_19_18_17_16_15_14_13_12,
+	20: semantic22_21_20_19_18_17_16_15_14_13_12,
+	21: semantic22_21_20_19_18_17_16_15_14_13_12,
+	22: semantic22_21_20_19_18_17_16_15_14_13_12,
 	23: semantic23,
 	24: semantic24,
 	25: semantic25,
