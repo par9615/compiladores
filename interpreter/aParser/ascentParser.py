@@ -165,7 +165,7 @@ def handleError(top):
             if inputToken.lexeme == '$':
                 raise Exception(makeErrorStr(inputToken.lexeme))
 
-            raise Exception(errorStr)
+            raise Exception(makeErrorStr(inputToken.lexeme))
     s = currVal
     try:
         while not tokens[0].lexeme in matrix[currVal]:
@@ -174,7 +174,7 @@ def handleError(top):
             except:
                 if inputToken.lexeme == '$':
                     raise Exception(makeErrorStr(inputToken.lexeme))
-                raise Exception(errorStr)
+                raise Exception(makeErrorStr(inputToken.lexeme))
     except:
         if inputToken.lexeme == '$':
                 raise Exception(makeErrorStr(inputToken.lexeme))
