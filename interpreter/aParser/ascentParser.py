@@ -139,6 +139,7 @@ def handleError(top):
     while not validState:
         try:
             s = stack[-1]
+            orig = stack[-1]
             values = list(matrix[s].values())
 
             while not 'G' in ''.join(values):
@@ -161,17 +162,28 @@ def handleError(top):
                         validState = True
                         break
         except:
-            raise Exception('Received: ', inputToken.lexeme, ' when expected one of the following: ', list(matrix[s].keys()))
+            if inputToken.lexeme == '$':
+                raise Exception(makeErrorStr(inputToken.lexeme))
+
+            raise Exception(errorStr)
     s = currVal
     try:
         while not tokens[0].lexeme in matrix[currVal]:
             try:
                 tokens.pop(0)
             except:
-                raise Exception('Received: ', inputToken.lexeme, ' when expected one of the following: ', list(matrix[s].keys()))
+                if inputToken.lexeme == '$':
+                    raise Exception(makeErrorStr(inputToken.lexeme))
+                raise Exception(errorStr)
     except:
-        raise Exception('Received: ', inputToken.lexeme, ' when expected one of the following: ', list(matrix[s].keys()))
+        if inputToken.lexeme == '$':
+                raise Exception(makeErrorStr(inputToken.lexeme))
+        raise Exception(makeErrorStr(inputToken.lexeme))
 
+def makeErrorStr(lexeme):
+    if lexeme != '$':
+        return ('Invalid input received: ' + lexeme + ' parsing aborted.')
+    return ('Invalid input received, parsing aborted.')
 
 
 
@@ -215,14 +227,17 @@ def algorithm(inputString):
                 output.append("Aceptado")
 
             else:
+                inputToken = tokens[0]
                 handleError(top)
                 token = tokens[0]
-                output.append("Error T")
+
+                output.append(makeErrorStr(inputToken.lexeme))
 
         else:
+            inputToken = tokens[0]
             handleError(top)
             token = tokens[0]
-            output.append("Error T")
+            output.append(makeErrorStr(inputToken.lexeme))
         #cambiar este print
         print(formattedString.format(output[0], output[1], output[2], output[3]))
 
