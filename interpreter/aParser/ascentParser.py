@@ -180,10 +180,15 @@ def handleError(top):
                 raise Exception(makeErrorStr(inputToken.lexeme))
         raise Exception(makeErrorStr(inputToken.lexeme))
 
-def makeErrorStr(lexeme):
-    if lexeme != '$':
-        return ('Invalid input received: ' + lexeme + ' parsing aborted.')
-    return ('Invalid input received, parsing aborted.')
+
+def makeErrorStr(lexeme, cont = False):
+    if lexeme != '$' and not cont:
+        return ('Invalid input received: ' + "'"+ lexeme + "'" + ' parsing aborted.')
+    elif not cont:
+        return ('Invalid input received, parsing aborted.')
+    elif lexeme != 'S':
+        return ('Invalid input received: ' + "'"+ lexeme + "'" + ', attempting recovery.')
+    return ('Invalid input received, attempting recovery.')
 
 
 
@@ -230,14 +235,13 @@ def algorithm(inputString):
                 inputToken = tokens[0]
                 handleError(top)
                 token = tokens[0]
-
-                output.append(makeErrorStr(inputToken.lexeme))
+                output.append(makeErrorStr(inputToken.lexeme, True))
 
         else:
             inputToken = tokens[0]
             handleError(top)
             token = tokens[0]
-            output.append(makeErrorStr(inputToken.lexeme))
+            output.append(makeErrorStr(inputToken.lexeme, True))
         #cambiar este print
         print(formattedString.format(output[0], output[1], output[2], output[3]))
 
