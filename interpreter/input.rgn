@@ -1,7 +1,7 @@
-dronIP = "";
-altura = 50;
+dronIP = "127.0.0.1:14550";
+altura = 15;
 
-dronTieso = drone(dronIP, altura);
+dronTieso = drone("127.0.0.1:14550", 15);
 
 oxxo = poi(20.610993, -103.416377, altura);
 edificioT = poi(20.608056, -103.417111, altura);
@@ -18,6 +18,8 @@ ruta1 = list(
 		edificioW,
 		sams,		
 	);
+
+speed(dronTieso, 15);
 
 mission(dronTieso, ruta1);
 

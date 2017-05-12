@@ -5,5 +5,5 @@ houses = list (
 			poi(20.609866, -103.414545, 40),
 			poi(20.61167, -103.415477, 40)
 		);
-mission(phantom, houses);
 speed(phantom, 15);
+mission(phantom, houses);

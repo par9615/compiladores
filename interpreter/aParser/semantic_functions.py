@@ -343,6 +343,7 @@ def semantic75(head, poppedList):
 def semantic76(head, poppedList):
 	identifier = poppedList[3].value
 	vehicle = symbolsTable[identifier]
+	vehicle.mode = VehicleMode("AUTO")
 	vehicle.speed = poppedList[1].value
 	return InputToken(head, vehicle)
 
@@ -373,6 +374,21 @@ def semantic88(head, poppedList):
 def semantic89(head, poppedList):
 	vehicle = connect(poppedList[1].value, wait_ready=True)
 	return InputToken(head, vehicle)
+
+def semantic90(head, poppedList):
+	identifier1 = poppedList[3].value
+	identifier2 = poppedList[1].value
+	address_port = symbolsTable[identifier1]
+	print(address_port)
+	ip_address = address_port[:address_port.index(':')]
+	print(ip_address)
+	port = address_port[address_port.index(':') + 1:]
+	socket.inet_aton(ip_address)
+	vehicle = connect(address_port, wait_ready = True)
+	height = symbolsTable[identifier2]
+	arm_and_takeoff(vehicle, height)
+	return InputToken(head, vehicle)
+
 
 semantic_functions = {
 	2: semantic2,
@@ -443,10 +459,12 @@ semantic_functions = {
 	73: semantic73,
 	74: semantic74,
 	75: semantic75,
+	76: semantic76,
 	77: semantic77,
 	87: semantic87,
 	88: semantic88,
-	89: semantic89
+	89: semantic89,
+	90: semantic90
 }
 
 def arm_and_takeoff(vehicle, height):
