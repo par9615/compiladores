@@ -273,16 +273,20 @@ def semantic62(head, poppedList):
 	return InputToken(head, inputStream)
 
 def semantic63(head, poppedList):
-	pass
+	element = poppedList[1].value
+	poppedList[0].value.insert(0, element)
 
 def semantic64(head, poppedList):
-	pass
+	return InputToken(head, [])
 
 def semantic65(head, poppedList):
-	pass
+	element = poppedList[1].value
+	poppedList[0].value.insert(0,element)
+	poppedList[0].lexeme = head
+	return poppedList[0]
 
 def semantic66(head, poppedList):
-	pass
+	return InputToken(head, [])
 
 def semantic67(head, poppedList):
 	poppedList[1].value.append("+")

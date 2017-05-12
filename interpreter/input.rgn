@@ -1,2 +1,1 @@
-a = input("Escribe número: ");
-print(a+2);
+a = list(2,3,4,5);

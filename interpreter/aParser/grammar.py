@@ -58,7 +58,7 @@ grammar = {
 	56 : ('At', [b'Si', b'NUMBER'], True),
 	57 : ('At', [b'STRING'], True),
 	58 : ('At', [b'Si', b'ID'], True),
-	59 : ('At', [b'Si', b'(', b'Ex', b')'], False),
+	59 : ('At', [b'Si', b'(', b'Ex', b')'], True),
 	60 : ('At', [b'poi(', b'Lla', b')'], False),
 	61 : ('At', [b'list(', b'Par', b')'], False),
 	62 : ('At', [b'input', b'(', b'Eps', b')'], True),
