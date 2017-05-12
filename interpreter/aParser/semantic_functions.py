@@ -309,12 +309,12 @@ def semantic71(head,poppedList):
 	address_port = poppedList[3].value
 	ip_address = address_port[:address_port.index(':')]
 	print(ip_address)
-	port = address_port[address_port.index(':'):]
+	port = address_port[address_port.index(':') + 1:]
 	socket.inet_aton(ip_address)
 	vehicle = connect(address_port, wait_ready = True)
 	height = poppedList[1].value
 	arm_and_takeoff(vehicle, height)
-	pass
+	return InputToken(head, vehicle)
 
 def semantic72(head, poppedList):
 	pass
@@ -414,7 +414,7 @@ semantic_functions = {
 	88: semantic88
 }
 
-def arm_and_takeoff(vehicle):
+def arm_and_takeoff(vehicle, height):
 	while not vehicle.is_armable:
 		print("Waiting for vehicle to initialise ...")
 		time.sleep(2)
@@ -428,9 +428,10 @@ def arm_and_takeoff(vehicle):
 		time.sleep(2)
 
 	print("Taking off")
+	vehicle.simple_takeoff(height+1)
 	while True:
 		print("Altitude: ", vehicle.location.global_relative_frame.alt)
-		if  vehicle.location.global_relative_frame.alt <= height * 0.95 :
+		if  vehicle.location.global_relative_frame.alt >= height * 0.95 :
 			print("Reached altitude")
 			break
 		time.sleep(1)
