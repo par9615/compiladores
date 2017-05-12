@@ -7,8 +7,8 @@ Sx -> A_sim ;.
 Sx -> A_dro ;.
 Sx -> Ctrl Sx.
 Sx -> Ctrl.
-Sx -> Fun Sx.
-Sx -> Fun.
+Sx -> Fun ; Sx.
+Sx -> Fun ;.
 
 A_aug -> ID Ao Ex.
 A_sim -> ID = Ex.
@@ -82,6 +82,7 @@ At -> Si ID.
 At -> Si ( Ex ).
 At -> poi ( Lla ).
 At -> list ( Par ).
+At -> input ( Eps ).
 
 Par -> Ex Pas.
 Par -> .
@@ -94,16 +95,15 @@ Si -> Si -.
 Si -> Si ~.
 Si -> .
 
-
 #Comandos Drone
-Dc -> drone ( STRING ).
+Dc -> drone ( STRING , Ex ).
 
 Lla -> Ex , Ex , Ex.
 
 # Drone Functions
 Fun -> move_to ( ID , Lla ).
 Fun -> rotate ( ID , Lla ).
-Fun -> print ( Ex ).
+Fun -> print ( Eps ).
 Fun -> speed ( ID , Ex ).
 Fun -> mission ( ID , Ex ).
 
@@ -122,3 +122,5 @@ El -> else { Sx }.
 El -> elif ( Ex ) { Sx } El.
 El -> .
 
+Eps -> Ex.
+Eps -> .

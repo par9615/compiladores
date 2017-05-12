@@ -27,7 +27,7 @@ languagePattern = r"""
 |(?P<pointOfIntereset>poi\()
 |(?P<float>[0-9]?\.[0-9]+)
 |(?P<number>[0-9]+)
-|(?P<reservedWord>(while|if|for|else|elif|print|mission|speed))
+|(?P<reservedWord>(while|if|for|else|elif|print|mission|speed|input))
 |(?P<identifier>[a-zA-Z_$][a-zA-Z_$0-9]*)
 |(?P<whitespace>\s+)
 |(?P<twoDots>[:])

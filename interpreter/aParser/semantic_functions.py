@@ -53,12 +53,14 @@ op = {
 
 def semantic2(head, poppedList):
 	poppedList[1].lexeme = head
-	print(poppedList[1].value)
 	return poppedList[1]
 
 def semantic3(head, poppedList):
 	poppedList[1].lexeme = head
-	print(poppedList[1].value)
+	return poppedList[1]
+
+def semantic4(head, poppedList):
+	poppedList[1].lexeme = head
 	return poppedList[1]
 
 def semantic9(head, poppedList):
@@ -73,6 +75,12 @@ def semantic10(head, poppedList):
 	value = poppedList[0].value
 	symbolsTable[identifier] = value
 	return InputToken(head, symbolsTable[identifier]) 
+
+def semantic11(head, poppedList):
+	identifier = poppedList[2].value
+	value = poppedList[0].value
+	symbolsTable[identifier] = value
+	return InputToken(head, symbolsTable[identifier])
 
 
 def semantic22_21_20_19_18_17_16_15_14_13_12(head, poppedList):
@@ -240,22 +248,58 @@ def semantic58(head, poppedList):
 
 	return result
 
+def semantic59(head, poppedList):
+	value = poppedList[1].value
+	result = InputToken(head, value)
+
+	for operation in reversed(poppedList[3].value): 
+		result.value = op[operation](result.value)
+
+	return result
+
+def semantic60(head, poppedList):
+	pass
+
+def semantic61(head, poppedList):
+	pass
+
+def semantic62(head, poppedList):
+	inputStream = ""
+	if poppedList[1].value == '':
+		inputStream = input()
+	else:
+		inputStream = input(poppedList[1].value)
+	inputStream = castValue(inputStream)
+	return InputToken(head, inputStream)
+
+def semantic63(head, poppedList):
+	pass
+
+def semantic64(head, poppedList):
+	pass
+
+def semantic65(head, poppedList):
+	pass
+
 def semantic66(head, poppedList):
+	pass
+
+def semantic67(head, poppedList):
 	poppedList[1].value.append("+")
 	return poppedList[1]
 
-def semantic67(head, poppedList):
+def semantic68(head, poppedList):
 	poppedList[1].value.append("-")
 	return poppedList[1]
 
-def semantic68(head, poppedList):
+def semantic69(head, poppedList):
 	poppedList[1].value.append("~")
 	return poppedList[1]
 
-def semantic69(head, poppedList):	
+def semantic70(head, poppedList):	
 	return InputToken(head, [])
 
-def semantic70(head,poppedList):
+def semantic71(head,poppedList):
 	address_port = poppedList[3].value
 	ip_address = address_port[:address_port.index(':')]
 	print(ip_address)
@@ -266,9 +310,6 @@ def semantic70(head,poppedList):
 	arm_and_takeoff(vehicle, height)
 	pass
 
-def semantic71(head, poppedList):
-	pass
-
 def semantic72(head, poppedList):
 	pass
 
@@ -276,9 +317,25 @@ def semantic73(head, poppedList):
 	pass
 
 def semantic74(head, poppedList):
+	pass
+
+def semantic75(head, poppedList):
 	print(poppedList[1].value)
 	poppedList[1].lexeme = head
 	return poppedList[1]
+
+def semantic76(head, poppedList):
+	pass
+
+def semantic77(head, poppedList):
+	pass
+
+def semantic87(head, poppedList):
+	poppedList[0].lexeme = head
+	return poppedList[0]
+
+def semantic88(head, poppedList):
+	return InputToken(head, '')
 
 semantic_functions = {
 	2: semantic2,
@@ -331,7 +388,8 @@ semantic_functions = {
 	56: semantic56,
 	57: semantic57,
 	58: semantic58,
-	66:	semantic66,
+	59: semantic59,
+	62: semantic62,
 	67: semantic67,
 	68: semantic68,
 	69: semantic69,
@@ -339,7 +397,10 @@ semantic_functions = {
 	71: semantic71,
 	72: semantic72,
 	73: semantic73,
-	74: semantic74
+	74: semantic74,
+	75: semantic75,
+	87: semantic87,
+	88: semantic88
 }
 
 def arm_and_takeoff(vehicle):
@@ -362,3 +423,15 @@ def arm_and_takeoff(vehicle):
 			print("Reached altitude")
 			break
 		time.sleep(1)
+
+def castValue(inputStream):
+	inputStreamTemp = inputStream
+	try:
+		inputStreamTemp = int(inputStream)
+		return inputStreamTemp
+	except ValueError:
+		try:
+			inputStreamTemp = float(inputStream)
+			return inputStreamTemp
+		except ValueError:
+			return inputStream
