@@ -96,7 +96,7 @@ Si -> .
 
 
 #Comandos Drone
-Dc -> drone ( STRING , Lla ).
+Dc -> drone ( STRING ).
 
 Lla -> Ex , Ex , Ex.
 
@@ -104,6 +104,8 @@ Lla -> Ex , Ex , Ex.
 Fun -> move_to ( ID , Lla ).
 Fun -> rotate ( ID , Lla ).
 Fun -> print ( Ex ).
+Fun -> speed ( ID , Ex ).
+Fun -> mission ( ID , Ex ).
 
 #Ctrl statement
 Ctrl -> For.
