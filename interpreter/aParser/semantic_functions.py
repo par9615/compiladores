@@ -344,7 +344,7 @@ def semantic76(head, poppedList):
 	identifier = poppedList[3].value
 	vehicle = symbolsTable[identifier]
 	vehicle.mode = VehicleMode("AUTO")
-	vehicle.speed = poppedList[1].value
+	vehicle.airspeed = poppedList[1].value
 	return InputToken(head, vehicle)
 
 def semantic77(head, poppedList):

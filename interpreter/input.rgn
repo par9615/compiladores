@@ -16,7 +16,7 @@ ruta1 = list(
 		elFeo,
 		parqueTecnologico,
 		edificioW,
-		sams,		
+		sams		
 	);
 
 speed(dronTieso, 15);
