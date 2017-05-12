@@ -1,2 +1,2 @@
-a = 4564;
-print(a);
+a = input("Escribe número: ");
+print(a+2);
