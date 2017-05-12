@@ -19,7 +19,7 @@ grammarPattern = r"""
 |(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
 |(?P<comparator>(< | >))
 |(?P<list>list)
-|(?P<pointOfInterest>poi\()
+|(?P<pointOfInterest>poi)
 |(?P<number>NUMBER)
 |(?P<string>STRING)
 |(?P<epsilon>[ε])

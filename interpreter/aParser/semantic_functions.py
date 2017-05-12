@@ -258,7 +258,8 @@ def semantic59(head, poppedList):
 	return result
 
 def semantic60(head, poppedList):
-	pass
+	poppedList[1].lexeme = head
+	return poppedList[1]
 
 def semantic61(head, poppedList):
 	poppedList[1].lexeme = head
@@ -317,7 +318,11 @@ def semantic71(head,poppedList):
 	return InputToken(head, vehicle)
 
 def semantic72(head, poppedList):
-	pass
+	elements = []
+	elements.append(poppedList[4].value)
+	elements.append(poppedList[2].value)
+	elements.append(poppedList[0].value)
+	return InputToken(head, tuple(elements))
 
 def semantic73(head, poppedList):
 	pass
@@ -395,6 +400,7 @@ semantic_functions = {
 	57: semantic57,
 	58: semantic58,
 	59: semantic59,
+	60: semantic60,
 	61: semantic61,
 	62: semantic62,
 	63: semantic63,
