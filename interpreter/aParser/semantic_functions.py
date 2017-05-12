@@ -1,4 +1,7 @@
 import operator
+import socket
+import time
+from dronekit import connect, VehicleMode, LocationGlobalRelative, LocationGlobal, Command
 
 class InputToken(object):
 	def __init__(self, lexeme, value = None):
@@ -231,8 +234,15 @@ def semantic68(head, poppedList):
 def semantic69(head, poppedList):	
 	return InputToken(head, [])
 
-
 def semantic70(head,poppedList):
+	address_port = poppedList[3].value
+	ip_address = address_port[:address_port.index(':')]
+	print(ip_address)
+	port = address_port[address_port.index(':'):]
+	socket.inet_aton(ip_address)
+	vehicle = connect(address_port, wait_ready = True)
+	height = poppedList[1].value
+	arm_and_takeoff(vehicle, height)
 	pass
 
 def semantic71(head, poppedList):
@@ -308,3 +318,24 @@ semantic_functions = {
 	73: semantic73,
 	74: semantic74
 }
+
+def arm_and_takeoff(vehicle):
+	while not vehicle.is_armable:
+		print("Waiting for vehicle to initialise ...")
+		time.sleep(2)
+
+	print("Arming motors")
+	vehicle.mode = VehicleMode("GUIDED")
+	vehicle.armed = True
+
+	while not vehicle.armed:
+		print("Wainting to arm ...")
+		time.sleep(2)
+
+	print("Taking off")
+	while True:
+		print("Altitude: ", vehicle.location.global_relative_frame.alt)
+		if  vehicle.location.global_relative_frame.alt <= height * 0.95 :
+			print("Reached altitude")
+			break
+		time.sleep(1)
