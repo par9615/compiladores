@@ -23,8 +23,8 @@ languagePattern = r"""
 |(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
 |(?P<comma>[,])
 |(?P<comparator>(< | >))
-|(?P<list>list)
-|(?P<pointOfIntereset>poi\()
+|(?P<list>list\()
+|(?P<pointOfIntereset>poi)
 |(?P<float>[0-9]?\.[0-9]+)
 |(?P<number>[0-9]+)
 |(?P<reservedWord>(while|if|for|else|elif|print|mission|speed|input))
@@ -165,7 +165,7 @@ def handleError(top):
             if inputToken.lexeme == '$':
                 raise Exception(makeErrorStr(inputToken.lexeme))
 
-            raise Exception(makeErrorStr(inputToken.lexeme))
+            raise Exception(errorStr)
     s = currVal
     try:
         while not tokens[0].lexeme in matrix[currVal]:
@@ -174,7 +174,7 @@ def handleError(top):
             except:
                 if inputToken.lexeme == '$':
                     raise Exception(makeErrorStr(inputToken.lexeme))
-                raise Exception(makeErrorStr(inputToken.lexeme))
+                raise Exception(errorStr)
     except:
         if inputToken.lexeme == '$':
                 raise Exception(makeErrorStr(inputToken.lexeme))
