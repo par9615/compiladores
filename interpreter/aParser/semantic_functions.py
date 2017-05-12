@@ -8,6 +8,9 @@ class InputToken(object):
 	def __str__(self):
 		return self.lexeme
 
+def getValue(identifier):
+	return symbolsTable[identifier]
+
 op = {
 	'+'	: operator.pos,
 	'-' : operator.neg,
@@ -29,6 +32,35 @@ op = {
 	'!=' : operator.ne,
 	'!' : operator.not_
 }
+
+def semantic0(head, poppedList):
+	poppedList[1].lexeme = head
+	return poppedList[1]
+
+def semantic1(head, poppedList):
+	poppedList[1].lexeme = head
+	return poppedList[1]
+
+def semantic2(head, poppedList):
+	poppedList[1].lexeme = head
+	return poppedList[1]
+
+def semantic3(head, poppedList):
+	poppedList[1].lexeme = head
+	return poppedList[1]
+
+def semantic9(head, poppedList):
+	identifier = getValue(poppedList[2].value)
+	operator = poppedList[1].value
+	value = poppedList[0].value
+	symbolsTable[identifier] = op[operator](identifier, value)
+	return InputToken(head, symbolsTable[identifier])
+
+def semantic10(head, poppedList):
+	identifier = poppedList[2].value
+	value = poppedList[0].value
+	symbolsTable[identifier] = value
+	return InputToken(head, symbolsTable[identifier]) 
 
 
 def semantic22_21_20_19_18_17_16_15_14_13_12(head, poppedList):

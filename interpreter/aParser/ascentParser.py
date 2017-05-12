@@ -106,7 +106,7 @@ def reduce(top, token): #Hace todo el procedimiento del reduce
 
 
     #Si tiene acción semántica
-    if(production[2]):
+    if production[2] and not errorDetected:
         result = semantic_functions[state](head, poppedList)
     else:
         result = InputToken(head)
@@ -130,7 +130,9 @@ def handleError(top):
     global stack
     global tokens
     global symbols
+    global errorDetected
 
+    errorDetected = True
     inputToken = tokens[0]
     validState = False
 
@@ -159,13 +161,16 @@ def handleError(top):
                         validState = True
                         break
         except:
-            raise Exception('Received: ', inputToken, ' when expected one of the following: ', ''.join(list(matrix[s].keys())))
+            raise Exception('Received: ', inputToken.lexeme, ' when expected one of the following: ', list(matrix[s].keys()))
     s = currVal
-    while not tokens[0].lexeme in matrix[currVal]:
-        try:
-            tokens.pop(0)
-        except:
-            raise Exception('Received: ', inputToken, ' when expected one of the following: ', ''.join(list(matrix[s].keys())))
+    try:
+        while not tokens[0].lexeme in matrix[currVal]:
+            try:
+                tokens.pop(0)
+            except:
+                raise Exception('Received: ', inputToken.lexeme, ' when expected one of the following: ', list(matrix[s].keys()))
+    except:
+        raise Exception('Received: ', inputToken.lexeme, ' when expected one of the following: ', list(matrix[s].keys()))
 
 
 
@@ -237,4 +242,5 @@ initial = getInitial(grammar)
 symbolsTable = {}
 valueCondition = []
 conditionsExecuted = []
+errorDetected = False
 ####################################################
