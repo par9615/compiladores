@@ -341,7 +341,10 @@ def semantic75(head, poppedList):
 	return poppedList[1]
 
 def semantic76(head, poppedList):
-	pass
+	identifier = poppedList[3].value
+	vehicle = symbolsTable[identifier]
+	vehicle.speed = poppedList[1].value
+	return InputToken(head, vehicle)
 
 def semantic77(head, poppedList):
 	identifier = poppedList[3].value
