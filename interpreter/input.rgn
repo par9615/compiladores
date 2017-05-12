@@ -1,1 +1,6 @@
-a = drone('127.0.0.1:14550', 20);
+coord1 = input("Coordenada 1:");
+coord2 = input("Coordenada 2:");
+coord3 = input("Altura: ");
+a = poi(coord1, coord2, coord3);
+
+print(a);

@@ -23,7 +23,7 @@ grammarPattern = r"""
 |(?P<number>NUMBER)
 |(?P<string>STRING)
 |(?P<epsilon>[ε])
-|(?P<reservedWord>(while|if|for|else|elif|print|mission|speed|input))
+|(?P<reservedWord>(while|if|for|else|elif|print|mission|speed|input|connect))
 |(?P<whitespace>\s+)
 |(?P<twoDots>[:])
 |(?P<comma>[,])

@@ -124,3 +124,5 @@ El -> .
 
 Eps -> Ex.
 Eps -> .
+
+Dc -> connect ( STRING ).

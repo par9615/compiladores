@@ -2,6 +2,7 @@ import operator
 import socket
 import time
 from dronekit import connect, VehicleMode, LocationGlobalRelative, LocationGlobal, Command
+from pymavlink import mavutil
 
 symbolsTable = {}
 
@@ -325,7 +326,11 @@ def semantic72(head, poppedList):
 	return InputToken(head, tuple(elements))
 
 def semantic73(head, poppedList):
-	pass
+	vehicle = symbolsTable[poppedList[3].value]
+	coords = poppedList[1].value
+	a_location = LocationGlobalRelative(coords[0], coords[1], coords[2])
+	vehicle.simple_goto(a_location)
+	return InputToken(head, vehicle)
 
 def semantic74(head, poppedList):
 	pass
@@ -339,7 +344,21 @@ def semantic76(head, poppedList):
 	pass
 
 def semantic77(head, poppedList):
-	pass
+	identifier = poppedList[3].value
+	vehicle = symbolsTable[identifier]
+	targets = poppedList[1].value
+	attach_pois(targets, vehicle, vehicle.location.global_frame)
+	vehicle.commands.next = 0
+	vehicle.mode = VehicleMode("AUTO")
+	while True:
+		next_way_point = vehicle.commands.next
+		print("Going to {} poi".format(next_way_point))
+		if (len(targets) == next_way_point):
+			print("Mission finished")
+			break
+		time.sleep(2)
+	return InputToken(head, vehicle)
+
 
 def semantic87(head, poppedList):
 	poppedList[0].lexeme = head
@@ -348,11 +367,16 @@ def semantic87(head, poppedList):
 def semantic88(head, poppedList):
 	return InputToken(head, '')
 
+def semantic89(head, poppedList):
+	vehicle = connect(poppedList[1].value, wait_ready=True)
+	return InputToken(head, vehicle)
+
 semantic_functions = {
 	2: semantic2,
 	3: semantic3,
 	9: semantic9,
 	10: semantic10,
+	11: semantic11,
 	12: semantic22_21_20_19_18_17_16_15_14_13_12,
 	13: semantic22_21_20_19_18_17_16_15_14_13_12,
 	14: semantic22_21_20_19_18_17_16_15_14_13_12,
@@ -416,8 +440,10 @@ semantic_functions = {
 	73: semantic73,
 	74: semantic74,
 	75: semantic75,
+	77: semantic77,
 	87: semantic87,
-	88: semantic88
+	88: semantic88,
+	89: semantic89
 }
 
 def arm_and_takeoff(vehicle, height):
@@ -453,3 +479,14 @@ def castValue(inputStream):
 			return inputStreamTemp
 		except ValueError:
 			return inputStream
+
+def attach_pois(targets, vehicle, actual_location):
+	cmds = vehicle.commands
+	cmds.clear()
+	cmds.add(Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, 0, 0, 0, 0, 10))
+	if (isinstance(targets, list)):
+		for target in targets:
+			cmds.add(Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, target[0], target[1], target[2]))
+	else:
+		cmds.add(Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, target[0], target[1], targets[2]))
+	cmds.upload()
