@@ -1,6 +1,35 @@
-coord1 = input("Coordenada 1:");
-coord2 = input("Coordenada 2:");
-coord3 = input("Altura: ");
-a = poi(coord1, coord2, coord3);
+dronIP = "";
+altura = 50;
 
-print(a);
+dronTieso = drone(dronIP, altura);
+
+oxxo = poi(20.610993, -103.416377, altura);
+edificioT = poi(20.608056, -103.417111, altura);
+elFeo = poi(20.607019, -103.416505, altura);
+parqueTecnologico = poi(20.604638, -103.414674, altura);
+edificioW = poi(20.608126, -103.413141, altura);
+sams = poi(20.611165, -103.413498, altura);
+
+ruta1 = list(
+		oxxo,
+		edificioT,
+		elFeo,
+		parqueTecnologico,
+		edificioW,
+		sams,		
+	);
+
+mission(dronTieso, ruta1);
+
+
+coordY = 20.608369;
+coordX = -103.414657;
+
+ruta2 = list(
+		poi(coordY, coordX, altura),
+		poi(coordY + 0.0020, coordX, altura)
+	);
+
+mission(dronTieso, ruta2);
+
+
