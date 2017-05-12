@@ -23,7 +23,7 @@ languagePattern = r"""
 |(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
 |(?P<comma>[,])
 |(?P<comparator>(< | >))
-|(?P<list>list\()
+|(?P<list>list)
 |(?P<pointOfIntereset>poi\()
 |(?P<float>[0-9]?\.[0-9]+)
 |(?P<number>[0-9]+)

@@ -18,7 +18,7 @@ grammarPattern = r"""
 |(?P<operatorLarger>(\|\| | && | \*\*))
 |(?P<operator>(\+ | - | ~ | \* | % | / | >> | << | & | \| | \^ | !))
 |(?P<comparator>(< | >))
-|(?P<list>list\()
+|(?P<list>list)
 |(?P<pointOfInterest>poi\()
 |(?P<number>NUMBER)
 |(?P<string>STRING)

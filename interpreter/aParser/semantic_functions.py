@@ -261,7 +261,8 @@ def semantic60(head, poppedList):
 	pass
 
 def semantic61(head, poppedList):
-	pass
+	poppedList[1].lexeme = head
+	return poppedList[1]
 
 def semantic62(head, poppedList):
 	inputStream = ""
@@ -275,6 +276,7 @@ def semantic62(head, poppedList):
 def semantic63(head, poppedList):
 	element = poppedList[1].value
 	poppedList[0].value.insert(0, element)
+	return poppedList[0]
 
 def semantic64(head, poppedList):
 	return InputToken(head, [])
@@ -393,7 +395,12 @@ semantic_functions = {
 	57: semantic57,
 	58: semantic58,
 	59: semantic59,
+	61: semantic61,
 	62: semantic62,
+	63: semantic63,
+	64: semantic64,
+	65: semantic65,
+	66: semantic66,
 	67: semantic67,
 	68: semantic68,
 	69: semantic69,
