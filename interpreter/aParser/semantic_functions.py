@@ -3,6 +3,8 @@ import socket
 import time
 from dronekit import connect, VehicleMode, LocationGlobalRelative, LocationGlobal, Command
 
+symbolsTable = {}
+
 class InputToken(object):
 	def __init__(self, lexeme, value = None):
 		self.lexeme = lexeme
@@ -33,7 +35,19 @@ op = {
 	'>=' : operator.ge,
 	'==' : operator.eq,
 	'!=' : operator.ne,
-	'!' : operator.not_
+	'!' : operator.not_,
+	"+=" : operator.iadd,
+	"-=" : operator.isub,
+	"*=" : operator.imul,
+	"/=" : operator.itruediv,
+	"%=" : operator.imod,
+	">>=": operator.irshift,
+	"<<=": operator.ilshift,
+	"&=" : operator.iand,
+	"|=" : operator.ior,
+	"^=" : operator.ixor,
+	"**=" : operator.ipow
+
 }
 
 
@@ -217,7 +231,14 @@ def semantic57(head, poppedList):
 	return  poppedList[0]
 
 def semantic58(head, poppedList):
-	print("pendiente")
+	identifier = poppedList[0].value
+	value = symbolsTable[identifier]
+	result = InputToken(head, value)
+
+	for operation in reversed(poppedList[1].value): 
+		result.value = op[operation](result.value)
+
+	return result
 
 def semantic66(head, poppedList):
 	poppedList[1].value.append("+")
@@ -255,7 +276,9 @@ def semantic73(head, poppedList):
 	pass
 
 def semantic74(head, poppedList):
-	pass
+	print(poppedList[1].value)
+	poppedList[1].lexeme = head
+	return poppedList[1]
 
 semantic_functions = {
 	2: semantic2,
