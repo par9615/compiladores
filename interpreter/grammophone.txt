@@ -113,7 +113,7 @@ Ctrl -> While.
 Ctrl -> If.
 
 #For & while loops
-For -> for ( ID : Ex , Ex, Ex ) { Sx }.
+For -> for ( ID : Ex , Ex , Ex ) { Sx }.
 While -> while ( Ex ) { Sx }.
 
 #If statement
@@ -127,3 +127,5 @@ Eps -> .
 
 Dc -> connect ( STRING ).
 Dc -> drone ( ID , ID ).
+
+At -> BOOLEAN.

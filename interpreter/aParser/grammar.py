@@ -62,6 +62,7 @@ grammar = {
 	60 : ('At', [b'poi', b'(', b'Lla', b')'], True),
 	61 : ('At', [b'list', b'(', b'Par', b')'], True),
 	62 : ('At', [b'input', b'(', b'Eps', b')'], True),
+	91 : ('At', [b'BOOLEAN'], False),
 	63 : ('Par', [b'Ex', b'Pas'], True),
 	64 : ('Par', [b'\xce\xb5'], True),
 	65 : ('Pas', [b',', b'Ex', b'Pas'], True),

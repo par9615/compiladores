@@ -17,6 +17,8 @@ class Parser(object):
 				tokens.append(InputToken('STRING', tupleToken[1].replace('"', '').replace("'", '')))
 			elif (tupleToken[0] == 'epsilon'):
 				tokens.append(InputToken(tupleToken[1], ''))
+			elif (tupleToken[0] == 'boolean'):
+				tokens.append(InputToken('BOOLEAN', tupleToken[1]))
 			elif (tupleToken[0] == 'whitespace'):
 				continue
 			else:

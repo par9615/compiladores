@@ -22,6 +22,7 @@ grammarPattern = r"""
 |(?P<pointOfInterest>poi)
 |(?P<number>NUMBER)
 |(?P<string>STRING)
+|(?P<boolean>BOOLEAN)
 |(?P<epsilon>[ε])
 |(?P<reservedWord>(while|if|for|else|elif|print|mission|speed|input|connect))
 |(?P<whitespace>\s+)

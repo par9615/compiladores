@@ -12,6 +12,7 @@ languagePattern = r"""
 (?P<drone>drone)
 |(?P<string>((?P<quote>['"]).*?(?P=quote)))
 |(?P<leftCurly>[{])
+|(?P<boolean>True|False)
 |(?P<rightCurly>[}])
 |(?P<leftBracket>[(])
 |(?P<rightBracker>[)])
@@ -189,7 +190,6 @@ def makeErrorStr(lexeme, cont = False):
     elif lexeme != 'S':
         return ('Invalid input received: ' + "'"+ lexeme + "'" + ', attempting recovery.')
     return ('Invalid input received, attempting recovery.')
-
 
 
 def algorithm(inputString):
